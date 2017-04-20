@@ -15,27 +15,27 @@ public class PeakadvisorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PeakadvisorApplication.class, args);
-		cassandraStart();
+//		cassandraStart();
 	}
 
-	private static void cassandraStart(){
-
-		Cluster cluster = Cluster.builder().addContactPoints("localhost").build();
-		Session session = cluster.connect("pierwszy");
-
-		CassandraOperations template = new CassandraTemplate(session);
-
-		Task first = template.insert(new Task("1","chujxD"));
-
-		Select selectStatement = QueryBuilder.select().from("task");
-		selectStatement.where(QueryBuilder.eq("id", first.getId()));
-
-		System.out.println(template.queryForObject(selectStatement, Task.class).getId());
-
-		template.truncate("task");
-
-		session.close();
-		cluster.close();
-
-	}
+//	private static void cassandraStart(){
+//
+//		Cluster cluster = Cluster.builder().addContactPoints("localhost").build();
+//		Session session = cluster.connect("pierwszy");
+//
+//		CassandraOperations template = new CassandraTemplate(session);
+//
+//		Task first = template.insert(new Task("1","chujxD"));
+//
+//		Select selectStatement = QueryBuilder.select().from("task");
+//		selectStatement.where(QueryBuilder.eq("id", first.getId()));
+//
+//		System.out.println(template.queryForObject(selectStatement, Task.class).getId());
+//
+//		template.truncate("task");
+//
+//		session.close();
+//		cluster.close();
+//
+//	}
 }
