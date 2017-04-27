@@ -1,5 +1,6 @@
 package edu.elka.peakadvisor.controllers;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 class PeakadvisorControllerTest {
     @Test
     void hello() {
+        Assertions.assertEquals(4, 2);
+        Assertions.fail("xD");
     }
 
 }
