@@ -1,99 +1,75 @@
 package edu.elka.peakadvisor.model;
 
 import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
+import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
-import org.springframework.data.cassandra.core.CassandraTemplate;
 
+import java.util.Collection;
 import java.util.List;
+
 
 /**
  * Created by apiotrowski on 25.05.2017.
  */
+
+
 public class CassandraDao {
 
-    public static CassandraDao dao;
+    @Autowired
+    private CassandraClusterFactoryBean cluster;
 
-    static{
-        dao = new CassandraDao();
-    }
+    @Autowired
+    private CassandraSessionFactoryBean session;    //cos nie owija automatycznie
 
-    public static CassandraDao getInstance(){
-        return dao;
+    @Autowired
+    private CassandraOperations cassandraTemplate;
+
+    public CassandraDao(CassandraClusterFactoryBean cluster, CassandraSessionFactoryBean session,
+                        CassandraOperations cassandraTemplate) {
+        this.cluster=cluster;
+        this.session=session;
+        this.cassandraTemplate=cassandraTemplate;
     }
 
     public void saveLatest(Latest latest){
-
-        Cluster cluster = Cluster.builder().addContactPoints("localhost").build();
-        Session session = cluster.connect("pierwszy");
-
-        CassandraOperations template = new CassandraTemplate(session);
-
+        CassandraOperations template = this.cassandraTemplate;
         template.insert(latest);
-
-//        Select selectStatement = QueryBuilder
-//                .select()
-//                .from("Task")
-//                .allowFiltering();
-//
-//        selectStatement.where(QueryBuilder.eq("name", first.getName()));
-//
-//        ResultSet r = template.query(selectStatement);
-//
-//        r.forEach(d -> System.out.println(d));
-//
-//        List<Row> list = r.all();
-//
-//        int a = r.getAvailableWithoutFetching();
-//
-//
-//        while(r.iterator().hasNext())
-//            r.iterator().next();
-//
-//        template.queryForObject("SELECT * FROM Task WHERE name='xD' ALLOW FILTERING;", String.class);
-//
-//        Task select = template.selectOne(selectStatement,Task.class);
-//
-//        System.out.println(select);
-
-//            selectStatement.allowFiltering();
-
-//            selectStatement.where();
-
-        //System.out.println(template.queryForObject(selectStatement, String.class));
-
-
-//            template.truncate("Task"); //rollback do stanu sprzed otwarcia sesji chyba
-
-        session.close();
-        cluster.close();
-
     }
 
-    public Latest readLatest(String name){
+    public void saveFew(Collection<Latest> collection){
+        collection.stream().forEach(col->saveLatest(col));
+    }
 
-        Cluster cluster = Cluster.builder().addContactPoints("localhost").build();
-        Session session = cluster.connect("pierwszy");
-        CassandraOperations template = new CassandraTemplate(session);
+    public Latest readOne(int name){
 
+        CassandraOperations template = this.cassandraTemplate;
         Select selectStatement = QueryBuilder
                 .select()
                 .from("Latest")
                 .allowFiltering();
 
-        selectStatement.where(QueryBuilder.eq("name",name));
+        selectStatement.where(QueryBuilder.eq("timestamp",name));
+        Latest result = template.selectOne(selectStatement,Latest.class);
 
-        Latest select = template.selectOne(selectStatement,Latest.class);
-
-        session.close();
-        cluster.close();
-
-        return select;
+        return result;
     }
 
+    public List<Latest> readAll(){
+
+        CassandraOperations template = this.cassandraTemplate;
+        Select selectStatement = QueryBuilder
+                .select()
+                .from("Latest")
+                .allowFiltering();
+
+        List<Latest> result = template.select(selectStatement,Latest.class);
+
+        return result;
+    }
 
 }

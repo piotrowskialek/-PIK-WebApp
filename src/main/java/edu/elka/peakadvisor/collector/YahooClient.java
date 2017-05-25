@@ -21,8 +21,6 @@ public class YahooClient implements CollectingClient{
         RestTemplate restTemplate = new RestTemplate();
         Latest latest = restTemplate.getForObject(url, Latest.class);
 
-
-
         return latest;
 
     }

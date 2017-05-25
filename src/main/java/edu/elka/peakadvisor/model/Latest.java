@@ -1,11 +1,15 @@
 package edu.elka.peakadvisor.model;
 
+import com.datastax.driver.core.DataType;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.cassandra.mapping.CassandraType;
+import org.springframework.data.cassandra.mapping.PrimaryKey;
 
 /**
  * Created by luksmi on 25.05.17.
  */
 public class Latest {
+
     @JsonProperty("disclaimer")
     private String disclaimer;
     @JsonProperty("license")
@@ -14,7 +18,9 @@ public class Latest {
     private Integer timestamp;
     @JsonProperty("base")
     private String base;
+
     @JsonProperty("rates")
+    @CassandraType(type = DataType.Name.UDT, userTypeName = "Rates")
     private Rates rates;
 
     @JsonProperty("disclaimer")
@@ -37,6 +43,7 @@ public class Latest {
         this.license = license;
     }
 
+    @PrimaryKey
     @JsonProperty("timestamp")
     public Integer getTimestamp() {
         return timestamp;
@@ -66,4 +73,5 @@ public class Latest {
     public void setRates(Rates rates) {
         this.rates = rates;
     }
+
 }

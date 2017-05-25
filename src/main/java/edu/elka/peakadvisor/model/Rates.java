@@ -1,348 +1,522 @@
 package edu.elka.peakadvisor.model;
 
+import com.datastax.driver.core.DataType;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.cassandra.mapping.CassandraType;
+import org.springframework.data.cassandra.mapping.UserDefinedType;
 
 /**
  * Created by luksmi on 25.05.17.
  */
+
+@UserDefinedType("Rates")
 public class Rates
 {
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("AED")
     private Double aED;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("AFN")
     private Double aFN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ALL")
     private Double aLL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("AMD")
     private Double aMD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ANG")
     private Double aNG;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("AOA")
     private Double aOA;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ARS")
     private Double aRS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("AUD")
     private Double aUD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("AWG")
     private Double aWG;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("AZN")
     private Double aZN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BAM")
     private Double bAM;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BBD")
     private Integer bBD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BDT")
     private Double bDT;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BGN")
     private Double bGN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BHD")
     private Double bHD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BIF")
     private Double bIF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BMD")
     private Integer bMD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BND")
     private Double bND;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BOB")
     private Double bOB;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BRL")
     private Double bRL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BSD")
     private Integer bSD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BTC")
     private Double bTC;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BTN")
     private Double bTN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BWP")
     private Double bWP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BYN")
     private Double bYN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("BZD")
     private Double bZD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CAD")
     private Double cAD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CDF")
     private Double cDF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CHF")
     private Double cHF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CLF")
     private Double cLF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CLP")
     private Double cLP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CNH")
     private Double cNH;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CNY")
     private Double cNY;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("COP")
     private Double cOP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CRC")
     private Double cRC;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CUC")
     private Integer cUC;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CUP")
     private Double cUP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CVE")
     private Integer cVE;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("CZK")
     private Double cZK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("DJF")
     private Double dJF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("DKK")
     private Double dKK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("DOP")
     private Double dOP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("DZD")
     private Double dZD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("EGP")
     private Double eGP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ERN")
     private Double eRN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ETB")
     private Double eTB;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("EUR")
     private Double eUR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("FJD")
     private Double fJD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("FKP")
     private Double fKP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GBP")
     private Double gBP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GEL")
     private Double gEL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GGP")
     private Double gGP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GHS")
     private Double gHS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GIP")
     private Double gIP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GMD")
     private Double gMD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GNF")
     private Double gNF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GTQ")
     private Double gTQ;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("GYD")
     private Double gYD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("HKD")
     private Double hKD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("HNL")
     private Double hNL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("HRK")
     private Double hRK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("HTG")
     private Double hTG;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("HUF")
     private Double hUF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("IDR")
     private Double iDR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ILS")
     private Double iLS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("IMP")
     private Double iMP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("INR")
     private Double iNR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("IQD")
     private Double iQD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("IRR")
     private Double iRR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ISK")
     private Double iSK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("JEP")
     private Double jEP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("JMD")
     private Double jMD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("JOD")
     private Double jOD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("JPY")
     private Double jPY;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KES")
     private Double kES;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KGS")
     private Double kGS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KHR")
     private Double kHR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KMF")
     private Double kMF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KPW")
     private Double kPW;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KRW")
     private Double kRW;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KWD")
     private Double kWD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KYD")
     private Double kYD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("KZT")
     private Double kZT;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("LAK")
     private Double lAK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("LBP")
     private Double lBP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("LKR")
     private Double lKR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("LRD")
     private Double lRD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("LSL")
     private Double lSL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("LYD")
     private Double lYD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MAD")
     private Double mAD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MDL")
     private Double mDL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MGA")
     private Double mGA;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MKD")
     private Double mKD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MMK")
     private Double mMK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MNT")
     private Double mNT;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MOP")
     private Double mOP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MRO")
     private Double mRO;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MUR")
     private Double mUR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MVR")
     private Double mVR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MWK")
     private Double mWK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MXN")
     private Double mXN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MYR")
     private Double mYR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("MZN")
     private Double mZN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("NAD")
     private Double nAD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("NGN")
     private Double nGN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("NIO")
     private Double nIO;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("NOK")
     private Double nOK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("NPR")
     private Double nPR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("NZD")
     private Double nZD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("OMR")
     private Double oMR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("PAB")
     private Integer pAB;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("PEN")
     private Double pEN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("PGK")
     private Double pGK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("PHP")
     private Double pHP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("PKR")
     private Double pKR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("PLN")
     private Double pLN;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("PYG")
     private Double pYG;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("QAR")
     private Double qAR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("RON")
     private Double rON;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("RSD")
     private Double rSD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("RUB")
     private Double rUB;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("RWF")
     private Double rWF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SAR")
     private Double sAR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SBD")
     private Double sBD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SCR")
     private Double sCR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SDG")
     private Double sDG;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SEK")
     private Double sEK;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SGD")
     private Double sGD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SHP")
     private Double sHP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SLL")
     private Double sLL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SOS")
     private Double sOS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SRD")
     private Double sRD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SSP")
     private Double sSP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("STD")
     private Double sTD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SVC")
     private Double sVC;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SYP")
     private Double sYP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("SZL")
     private Double sZL;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("THB")
     private Double tHB;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TJS")
     private Double tJS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TMT")
     private Double tMT;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TND")
     private Double tND;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TOP")
     private Double tOP;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TRY")
     private Double tRY;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TTD")
     private Double tTD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TWD")
     private Double tWD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("TZS")
     private Double tZS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("UAH")
     private Double uAH;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("UGX")
     private Double uGX;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("USD")
     private Integer uSD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("UYU")
     private Double uYU;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("UZS")
     private Double uZS;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("VEF")
     private Double vEF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("VND")
     private Double vND;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("VUV")
     private Double vUV;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("WST")
     private Double wST;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XAF")
     private Double xAF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XAG")
     private Double xAG;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XAU")
     private Double xAU;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XCD")
     private Double xCD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XDR")
     private Double xDR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XOF")
     private Double xOF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XPD")
     private Double xPD;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XPF")
     private Double xPF;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("XPT")
     private Double xPT;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("YER")
     private Double yER;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ZAR")
     private Double zAR;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ZMW")
     private Double zMW;
+    @CassandraType(type = DataType.Name.DOUBLE)
     @JsonProperty("ZWL")
     private Double zWL;
+
 
     @JsonProperty("AED")
     public Double getAED() {
