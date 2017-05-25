@@ -42,7 +42,7 @@ public class PeakadvisorController {
 
     public void saveOneTest(){
 
-        dao = dao==null ? new CassandraDao(cluster,session,cassandraTemplate):dao;//tymczasowe mam nadzieje
+        dao = new CassandraDao(cluster,session,cassandraTemplate);//tymczasowe mam nadzieje
 
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
