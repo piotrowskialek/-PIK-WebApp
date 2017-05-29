@@ -1,8 +1,8 @@
 package edu.elka.peakadvisor.controllers;
 
 import edu.elka.peakadvisor.collector.CollectingClient;
-import edu.elka.peakadvisor.model.CassandraDao;
 import edu.elka.peakadvisor.collector.YahooClient;
+import edu.elka.peakadvisor.model.CassandraDao;
 import edu.elka.peakadvisor.model.Latest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
@@ -10,6 +10,8 @@ import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -36,9 +38,22 @@ public class PeakadvisorController {
     @RequestMapping("/")
     public String hello(){
 
-        saveOneTest();
-        return dao.readOne(1495738800).toString();
+        //watek chodzi i co godzine zapisuje do bazy
+        new Thread((Runnable) ()->{while(true){
+            saveOneTest();
+            //czas tutaj drukowany zgodny z timestampem w zapisywanym latest
+            System.out.println("Zapisano latest: "+System.currentTimeMillis()/1000L);
+            try {
+                //czekaj 3600s czyli 1 godzine
+                TimeUnit.SECONDS.sleep(3600);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }}).start();
+
+        return "Collector started.";
     }
+
 
     public void saveOneTest(){
 
