@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class CassandraDao {
         collection.stream().forEach(col->saveLatest(col));
     }
 
-    public Latest readOne(int name){
+    public Latest readOne(int timestamp){
 
         CassandraOperations template = this.cassandraTemplate;
         Select selectStatement = QueryBuilder
@@ -53,7 +54,7 @@ public class CassandraDao {
                 .from("Latest")
                 .allowFiltering();
 
-        selectStatement.where(QueryBuilder.eq("timestamp",name));
+        selectStatement.where(QueryBuilder.eq("timestamp",timestamp));
         Latest result = template.selectOne(selectStatement,Latest.class);
 
         return result;
@@ -69,6 +70,16 @@ public class CassandraDao {
 
         List<Latest> result = template.select(selectStatement,Latest.class);
 
+        return result;
+    }
+
+    public Latest readOneWithCurrName(int timestamp, String name){
+
+        CassandraOperations template = this.cassandraTemplate;
+        Latest result = template.selectOne("SELECT timestamp,base,disclaimer,license,rates."+name+" " +
+                "FROM latest WHERE timestamp="+timestamp+";",Latest.class);
+        //tak wiem ze to ma podatnosc, ale jest problem z cudzyslowami przy normalnym chainowaniu
+        //chainuje "rates.btc" zamiast rates.btc, nie potrafie tego naprawic
         return result;
     }
 

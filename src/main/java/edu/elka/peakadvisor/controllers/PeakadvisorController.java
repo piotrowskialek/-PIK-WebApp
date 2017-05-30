@@ -35,9 +35,8 @@ public class PeakadvisorController {
 
     @RequestMapping("/")
     public String hello(){
-
         saveOneTest();
-        return dao.readOne(1495738800).toString();
+        return dao.readOneWithCurrName(1495738800,"btc").toString();
     }
 
     public void saveOneTest(){
