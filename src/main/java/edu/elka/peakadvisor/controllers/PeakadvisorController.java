@@ -31,37 +31,36 @@ public class PeakadvisorController {
 
     private CassandraDao dao;
 
-    public PeakadvisorController(){
+    public PeakadvisorController() {
         dao = new CassandraDao(cluster,session,cassandraTemplate);
+
     }
+
 
     @RequestMapping("/")
     public String hello(){
-
-        //watek chodzi i co godzine zapisuje do bazy
-        new Thread((Runnable) ()->{while(true){
-            saveOneTest();
-            //czas tutaj drukowany zgodny z timestampem w zapisywanym latest
-            System.out.println("Zapisano latest: "+System.currentTimeMillis()/1000L);
-            try {
-                //czekaj 3600s czyli 1 godzine
-                TimeUnit.SECONDS.sleep(3600);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }}).start();
-
-        return "Collector started.";
+        return "/ started.";
     }
 
-
+    @RequestMapping("/scheduler")
+    public String hello2(){
+        startScheduler();
+        return "Scheduler started.";
+    }
     public void saveOneTest(){
 
         dao = new CassandraDao(cluster,session,cassandraTemplate);//tymczasowe mam nadzieje
 
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
+
+        /*
+        DO USUNIECIA W PRODUKCJi - tu konieczne aby timestamp byl
+        inny przy zbieraniu czestszym niz 1h
+         */
+        //latest.setTimestamp((int)(System.currentTimeMillis()/1000L));
         dao.saveLatest(latest);
+        System.out.println("saveOneTest() poszlo");
 
     }
 
@@ -97,6 +96,17 @@ public class PeakadvisorController {
         this.dao = dao;
     }
 
-
+    public void startScheduler(){
+        //watek chodzi i co godzine zapisuje do bazy
+        new Thread((Runnable) ()->{while(true){
+            saveOneTest();
+            try {
+                //czekaj 3600s czyli 1 godzine
+                TimeUnit.SECONDS.sleep(3600);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }}).start();
+    }
 }
 
