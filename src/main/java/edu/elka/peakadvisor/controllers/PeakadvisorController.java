@@ -4,13 +4,16 @@ import edu.elka.peakadvisor.collector.CollectingClient;
 import edu.elka.peakadvisor.collector.YahooClient;
 import edu.elka.peakadvisor.model.CassandraDao;
 import edu.elka.peakadvisor.model.Latest;
+import edu.elka.peakadvisor.model.Rates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 
@@ -39,6 +42,22 @@ public class PeakadvisorController {
 
     @RequestMapping("/")
     public String hello(){
+
+       //fake database to test getValue() method:
+        CollectingClient yahooClient = new YahooClient();
+        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
+        int noOfRows = 20;
+        //creates noOfRows rows of data, each has timestamp incremented by 3600
+        for(int i = 0; i < noOfRows; i++){
+            latest.setTimestamp(i*3600);
+            latest.getRates().setZWL((double)i+3.0); //only ZWL changed
+
+            dao = new CassandraDao(cluster,session,cassandraTemplate);
+            dao.saveLatest(latest);
+        }
+
+
+
         return "/ started.";
     }
 
@@ -47,6 +66,33 @@ public class PeakadvisorController {
         startScheduler();
         return "Scheduler started.";
     }
+
+    @RequestMapping("/getValue")
+    public String getValue(
+            @RequestParam(value="currency", defaultValue="USD") String cur,
+            @RequestParam(value="start", defaultValue="0") Integer start,
+            @RequestParam(value="end", defaultValue="1") Integer end
+    ){
+        String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
+
+        try {
+            Method m = Rates.class.getMethod("get"+cur);
+            for(int ts = start; ts <= end; ts+=3600){
+                dao = new CassandraDao(cluster,session,cassandraTemplate);
+                returner += "\""+ts+"\":\""+m.invoke(dao.readOne(ts).getRates(), null)+"\"";
+                if(ts != end){
+                    returner += ", ";
+                }
+                else if(ts == end){
+                    returner += " } }";
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return returner;
+    }
+
     public void saveOneTest(){
 
         dao = new CassandraDao(cluster,session,cassandraTemplate);//tymczasowe mam nadzieje
