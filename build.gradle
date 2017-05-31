@@ -46,6 +46,7 @@ configurations {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-cassandra')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile files ('lib/commons-math3-3.6.1.jar')
 	//compileOnly('org.projectlombok:lgombok')
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 

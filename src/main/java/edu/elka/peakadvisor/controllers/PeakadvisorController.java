@@ -43,6 +43,7 @@ public class PeakadvisorController {
     @RequestMapping("/")
     public String hello(){
 
+
        //fake database to test getValue() method:
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
@@ -91,6 +92,7 @@ public class PeakadvisorController {
             e.printStackTrace();
         }
             return returner;
+
     }
 
     public void saveOneTest(){
