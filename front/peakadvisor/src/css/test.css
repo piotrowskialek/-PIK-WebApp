@@ -1,0 +1,12 @@
+html,
+body,
+header {
+    background-color: #4dd455; /* Black */
+}
+div {
+    background-color: #d40518; /* Black */
+
+    width: 2rem;
+    height: 2rem;
+    margin: .5rem;
+}
