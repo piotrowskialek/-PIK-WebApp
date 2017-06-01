@@ -24,4 +24,5 @@ public class YahooClient implements CollectingClient{
         return latest;
 
     }
+
 }
