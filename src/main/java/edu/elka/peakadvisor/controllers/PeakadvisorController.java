@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,9 +40,13 @@ public class PeakadvisorController {
 
     }
 
+//    @RequestMapping("/")
+//    public String index() {
+//        return "index";
+//    }
 
     @RequestMapping("/")
-    public String hello(){
+    public String index(){
 
 
        //fake database to test getValue() method:
@@ -59,7 +64,9 @@ public class PeakadvisorController {
 
 
 
-        return "/ started.";
+//        return "/ started.";
+        return "index";
+
     }
 
     @RequestMapping("/scheduler")
