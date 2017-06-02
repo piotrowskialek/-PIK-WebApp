@@ -9,6 +9,7 @@ export default class Layout extends React.Component {
 
     render() {
    return(
+       // alert("nanan")
        <div>
         <h1> Peak Advisor </h1>
            {this.props.children}
