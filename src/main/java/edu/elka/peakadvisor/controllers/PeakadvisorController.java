@@ -63,9 +63,9 @@ public class PeakadvisorController {
     }
 
     @RequestMapping("/scheduler")
-    public String hello2(){
-        startScheduler();
-        return "Scheduler started.";
+    public String hello2(@RequestParam(value="step", defaultValue="3600") Integer step){
+        startScheduler(step);
+        return "Scheduler started with step="+step.toString();
     }
 
     @RequestMapping("/getValue")
@@ -74,7 +74,21 @@ public class PeakadvisorController {
             @RequestParam(value="start", defaultValue="0") Integer start,
             @RequestParam(value="end", defaultValue="1") Integer end
     ){
+
+        int modulo_start = start%3600;
+        int modulo_end = end%3600;
+
+        if(modulo_start < 3600/2){ start = start - modulo_start;}
+        else { start = start + 3600 - modulo_start; }
+
+        if(modulo_end < 3600/2){ end = end - modulo_end;}
+        else { end = end + 3600 - modulo_end; }
+
         String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
+
+        if(start>end){
+            return returner+"} }";
+        }
 
         try {
             Method m = Rates.class.getMethod("get"+cur);
@@ -144,13 +158,13 @@ public class PeakadvisorController {
         this.dao = dao;
     }
 
-    public void startScheduler(){
+    public void startScheduler(int step){
         //watek chodzi i co godzine zapisuje do bazy
         new Thread((Runnable) ()->{while(true){
             saveOneTest();
             try {
                 //czekaj 3600s czyli 1 godzine
-                TimeUnit.SECONDS.sleep(3600);
+                TimeUnit.SECONDS.sleep(step);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
