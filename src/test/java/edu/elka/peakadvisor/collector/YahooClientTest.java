@@ -11,14 +11,14 @@ class YahooClientTest {
 
     private YahooClient yahooClient=new YahooClient();
 
-    @Test
-    void checkCommunication() {
-        assertEquals(false, yahooClient.checkCommunication("12345"));
-    }
-
-    @Test
-    void collect() {
-        assertEquals(false, yahooClient.collect("12345"));
-    }
+//    @Test
+//    void checkCommunication() {
+//        assertEquals(false, yahooClient.checkCommunication("12345"));
+//    }
+//
+//    @Test
+//    void collect() {
+//        assertEquals(false, yahooClient.collect("12345"));
+//    }
 
 }
