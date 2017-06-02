@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/peakadvisor.iml" filepath="$PROJECT_DIR$/.idea/modules/peakadvisor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/peakadvisor_main.iml" filepath="$PROJECT_DIR$/.idea/modules/peakadvisor_main.iml" group="peakadvisor" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/peakadvisor_test.iml" filepath="$PROJECT_DIR$/.idea/modules/peakadvisor_test.iml" group="peakadvisor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PIK-WebApp.iml" filepath="$PROJECT_DIR$/.idea/modules/PIK-WebApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PIK-WebApp_main.iml" filepath="$PROJECT_DIR$/.idea/modules/PIK-WebApp_main.iml" group="PIK-WebApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PIK-WebApp_test.iml" filepath="$PROJECT_DIR$/.idea/modules/PIK-WebApp_test.iml" group="PIK-WebApp" />
     </modules>
   </component>
 </project>
