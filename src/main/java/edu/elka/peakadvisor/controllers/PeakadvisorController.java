@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -36,25 +37,16 @@ public class PeakadvisorController {
     @Autowired
     private CassandraOperations cassandraTemplate;
 
+    @Autowired
     private CassandraDao dao;
 
+    @Autowired
     private Calculator calculator;
-
-    public PeakadvisorController() {
-        dao = new CassandraDao(cluster,session,cassandraTemplate);
-        calculator = new Calculator("./src/main/java/edu/elka/peakadvisor/calculator/dataset.arff");
-    }
-
-//    @RequestMapping("/")
-//    public String index() {
-//        return "index";
-//    }
 
     @RequestMapping("/")
     public String index(){
 
-
-       //fake database to test getValue() method:
+        //fake database to test getValue() method:
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
         int noOfRows = 20;
@@ -62,59 +54,84 @@ public class PeakadvisorController {
         for(int i = 0; i < noOfRows; i++){
             latest.setTimestamp(i*3600);
             latest.getRates().setZWL((double)i+3.0); //only ZWL changed
-
-            dao = new CassandraDao(cluster,session,cassandraTemplate);
             dao.saveLatest(latest);
         }
 
-
-
-//        return "/ started.";
         return "index";
 
     }
 
     @RequestMapping("/scheduler")
-    public String hello2(){
-        startScheduler();
-        return "Scheduler started.";
+    public String hello2(@RequestParam(value="step", defaultValue="3600") Integer step){
+        startScheduler(step);
+        return "Scheduler started with step="+step.toString()+" sec.";
     }
 
     @RequestMapping("/getValue")
     public String getValue(
             @RequestParam(value="currency", defaultValue="USD") String cur,
             @RequestParam(value="start", defaultValue="0") Integer start,
-            @RequestParam(value="end", defaultValue="1") Integer end
+            @RequestParam(value="end", defaultValue="0") Integer end
     ){
-        String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
+        String returner="{ \"currency\":\""+cur+"\", \"times\": [ ";
 
-        /*try { // DO WYJEBANIA
-            Method m = Rates.class.getMethod("get"+cur);
-            for(int ts = start; ts <= end; ts+=3600){
-                dao = new CassandraDao(cluster,session,cassandraTemplate);
-                returner += "\""+ts+"\":\""+m.invoke(dao.readOne(ts).getRates(), null)+"\"";
-                if(ts != end){
-                    returner += ", ";
-                }
-                else if(ts == end){
-                    returner += " } }";
-                }
+        if(start>end){
+            return returner+"} }";
+        }
+
+        //zaokraglanie do najblizszej wielokrotnosci 3600
+        {
+            int modulo_start = start % 3600;
+            int modulo_end = end % 3600;
+
+            if (modulo_start < 3600 / 2) {
+                start = start - modulo_start;
+            } else {
+                start = start + 3600 - modulo_start;
             }
+
+            if (modulo_end < 3600 / 2) {
+                end = end - modulo_end;
+            } else {
+                end = end + 3600 - modulo_end;
+            }
+        }
+
+
+        /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
+        {
+            int minTimestamp = getMinTimestampFromDB();
+            int maxTimestamp = getMaxTimestampFromDB();
+            if(start<minTimestamp) start = minTimestamp;
+            if(end>maxTimestamp) end = maxTimestamp;
+        }*/
+
+        try {
+            List<Double> prices = dao.getPricesWithTimestampRange(cur, start, end);
+            ArrayList<Rate> rates = new ArrayList<>();
+            int i = 0;
+            for (int timestamp = start; i < prices.size(); timestamp += 3600, ++i) {
+                rates.add(new Rate(timestamp, prices.get(i)));
+            }
+
+            ArrayList<Rate> predictedRates = calculator.predictRates(rates, start, end);
+            for (Rate rate : predictedRates) {
+                returner += "{" + rate.getTimestamp() + ": " + rate.getPrice() + "}, ";
+            }
+
+            returner += "]}";
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
-        ArrayList<Rate> predictedRates = calculator.predictRates(7);
-        for (Rate rate : predictedRates) {
-            returner += "\"" + rate.getTimestamp() + "\": \"" + rate.getPrice() + "\",\n";
         }
-        returner += "}}";
+
+        saveOneTest();
+        dao.getPricesWithTimestampRange("btc",100,Integer.MAX_VALUE);
         return returner;
 
     }
 
     public void saveOneTest(){
 
-        dao = new CassandraDao(cluster,session,cassandraTemplate);//tymczasowe mam nadzieje
 
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
@@ -123,7 +140,6 @@ public class PeakadvisorController {
         DO USUNIECIA W PRODUKCJi - tu konieczne aby timestamp byl
         inny przy zbieraniu czestszym niz 1h
          */
-        //latest.setTimestamp((int)(System.currentTimeMillis()/1000L));
         dao.saveLatest(latest);
         System.out.println("saveOneTest() poszlo");
 
@@ -145,6 +161,14 @@ public class PeakadvisorController {
         this.cassandraTemplate = cassandraTemplate;
     }
 
+    public Calculator getCalculator() {
+        return calculator;
+    }
+
+    public void setCalculator(Calculator calculator) {
+        this.calculator = calculator;
+    }
+
     public CassandraClusterFactoryBean getCluster() {
         return cluster;
     }
@@ -161,17 +185,16 @@ public class PeakadvisorController {
         this.dao = dao;
     }
 
-    public void startScheduler(){
+    public void startScheduler(int step){
         //watek chodzi i co godzine zapisuje do bazy
         new Thread((Runnable) ()->{while(true){
             saveOneTest();
             try {
                 //czekaj 3600s czyli 1 godzine
-                TimeUnit.SECONDS.sleep(3600);
+                TimeUnit.SECONDS.sleep(step);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }}).start();
     }
 }
-
