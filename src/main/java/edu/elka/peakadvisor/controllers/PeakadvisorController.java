@@ -33,21 +33,11 @@ public class PeakadvisorController {
     @Autowired
     private CassandraOperations cassandraTemplate;
 
+    @Autowired
     private CassandraDao dao;
-
-    public PeakadvisorController() {
-        dao = new CassandraDao(cluster,session,cassandraTemplate);
-
-    }
-
-//    @RequestMapping("/")
-//    public String index() {
-//        return "index";
-//    }
 
     @RequestMapping("/")
     public String index(){
-
 
        //fake database to test getValue() method:
         CollectingClient yahooClient = new YahooClient();
@@ -57,14 +47,9 @@ public class PeakadvisorController {
         for(int i = 0; i < noOfRows; i++){
             latest.setTimestamp(i*3600);
             latest.getRates().setZWL((double)i+3.0); //only ZWL changed
-
-            dao = new CassandraDao(cluster,session,cassandraTemplate);
             dao.saveLatest(latest);
         }
 
-
-
-//        return "/ started.";
         return "index";
 
     }
@@ -117,7 +102,7 @@ public class PeakadvisorController {
         try {
             Method m = Rates.class.getMethod("get"+cur);
             for(int ts = start; ts <= end; ts+=3600){
-                dao = new CassandraDao(cluster,session,cassandraTemplate);
+//                dao = new CassandraDao(cluster,session,cassandraTemplate);
                 returner += "\""+ts+"\":\""+ m.invoke(dao.readOne(ts).getRates(), null) +"\"";
                 if(ts != end){
                     returner += ", ";
@@ -129,13 +114,15 @@ public class PeakadvisorController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-            return returner;
+
+        saveOneTest();
+        dao.getPricesWithTimestampRange("btc",100,Integer.MAX_VALUE);
+        return returner;
 
     }
 
     public void saveOneTest(){
 
-        dao = new CassandraDao(cluster,session,cassandraTemplate);//tymczasowe mam nadzieje
 
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
@@ -144,7 +131,6 @@ public class PeakadvisorController {
         DO USUNIECIA W PRODUKCJi - tu konieczne aby timestamp byl
         inny przy zbieraniu czestszym niz 1h
          */
-        //latest.setTimestamp((int)(System.currentTimeMillis()/1000L));
         dao.saveLatest(latest);
         System.out.println("saveOneTest() poszlo");
 
