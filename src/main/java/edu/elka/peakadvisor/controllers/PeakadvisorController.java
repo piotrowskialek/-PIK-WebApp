@@ -42,7 +42,7 @@ public class PeakadvisorController {
 
     public PeakadvisorController() {
         dao = new CassandraDao(cluster,session,cassandraTemplate);
-        calculator = new Calculator("../calculator/dataset.arff");
+        calculator = new Calculator("./src/main/java/edu/elka/peakadvisor/calculator/dataset.arff");
     }
 
 //    @RequestMapping("/")
@@ -88,7 +88,7 @@ public class PeakadvisorController {
     ){
         String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
 
-        /*try {
+        /*try { // DO WYJEBANIA
             Method m = Rates.class.getMethod("get"+cur);
             for(int ts = start; ts <= end; ts+=3600){
                 dao = new CassandraDao(cluster,session,cassandraTemplate);

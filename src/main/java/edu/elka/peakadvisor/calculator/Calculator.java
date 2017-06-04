@@ -2,6 +2,7 @@ package edu.elka.peakadvisor.calculator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -33,14 +34,19 @@ public class Calculator {
             Attribute timestampAttr = new Attribute("timestamp");
             for (int i = nrRates; i < data.size(); ++i) {
                 predictedRate = data.get(i);
-                String timestampStr = predictedRate.stringValue(timestampAttr);
-                Rate rate = new Rate (new Timestamp(Long.parseLong(timestampStr)), model.classifyInstance(predictedRate));
+                double timestampDouble = data.instance(i).value(0);
+                long timestampLong = (long) timestampDouble;
+                Rate rate = new Rate(new Timestamp(timestampLong), model.classifyInstance(predictedRate));
                 results.add(rate);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return results;
+    }
+
+    private void buildARFF (Timestamp begin, Timestamp end, String currency) {
+
     }
 
 

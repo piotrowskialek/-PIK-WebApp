@@ -67,6 +67,30 @@
           <element id="library" level="project" name="Gradle: com.github.jnr:jnr-x86asm:1.0.2" />
           <element id="library" level="project" name="Gradle: com.github.jnr:jnr-constants:0.9.0" />
           <element id="library" level="project" name="Gradle: io.netty:netty-common:4.0.37.Final" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/nz.ac.waikato.cms.weka/weka-stable/3.8.0/5f6547867e775b416982cdcaa2dbef67855a6669/weka-stable-3.8.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/nz.ac.waikato.cms.weka.thirdparty/java-cup-11b/2015.03.26/6e97c5abd2e76d83220f09f72de0b89b6de18dc1/java-cup-11b-2015.03.26.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/nz.ac.waikato.cms.weka.thirdparty/java-cup-11b-runtime/2015.03.26/5466fad5c5866f33e3230c30ca623e7e8deff1f8/java-cup-11b-runtime-2015.03.26.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/nz.ac.waikato.cms.weka.thirdparty/bounce/0.18/d774f9a0aa5cbe08dea8907720c64c417aed861/bounce-0.18.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.googlecode.matrix-toolkits-java/mtj/1.0.4/e14ed840ff5e15de92dba2d1af29201fa70a0f35/mtj-1.0.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/net.sourceforge.f2j/arpack_combined_all/0.1/225619a060b42605b4d9fd4af11815664abf26eb/arpack_combined_all-0.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.googlecode.netlib-java/netlib-java/1.1/4a9c3b55b23430e5a6ad86101a88aea500ba8086/netlib-java-1.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/all/1.1.2/f235011206ac009adad2d6607f222649aba5ca9e/all-1.1.2.pom" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_ref-osx-x86_64/1.1/80da53ec862f283dc3b191b9dbd3166ea6671831/netlib-native_ref-osx-x86_64-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_ref-linux-x86_64/1.1/5a3e5787d03c39790d5ae08cce189dd1ccc4a38/netlib-native_ref-linux-x86_64-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_ref-linux-i686/1.1/eedd845b214aea560bce317d778ebb52f8f46038/netlib-native_ref-linux-i686-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_ref-win-x86_64/1.1/4ab54511c2844546279d9f8e427c73953b794686/netlib-native_ref-win-x86_64-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_ref-win-i686/1.1/167fb794a26cb0bfc74890c704c7137b1d5b50fd/netlib-native_ref-win-i686-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_ref-linux-armhf/1.1/ec467162f74710fd8897cff6888534ceaf297d9a/netlib-native_ref-linux-armhf-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_system-osx-x86_64/1.1/d724e33675dc8eaa5c8fcb05a3aaca6f3339afa7/netlib-native_system-osx-x86_64-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_system-linux-x86_64/1.1/163e88facabe7fa29952890dc2d3429e28501120/netlib-native_system-linux-x86_64-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_system-linux-i686/1.1/dd43225560dbd9115d306f9be3ca195aed236b78/netlib-native_system-linux-i686-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_system-linux-armhf/1.1/27ae9f6a9c88b3f8d12ffa52d62941615f8ed416/netlib-native_system-linux-armhf-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_system-win-x86_64/1.1/222c7915be1daf1c26a4206f375d4957ae5f9d81/netlib-native_system-win-x86_64-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_system-win-i686/1.1/c25fd1881cf93f7716f47b7deec859f6b6b7be50/netlib-native_system-win-i686-1.1-natives.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/native_ref-java/1.1/408c71ffbc3646dda7bee1e22bf19101e5e9ee90/native_ref-java-1.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/native_system-java/1.1/3c6a2455f96b354a6940dce1393abb35ed7641da/native_system-java-1.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil/jniloader/1.1/4840f897eeb54d67ee14e478f8a45cc9937f3ce1/jniloader-1.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.sdkman/candidates/gradle/3.5/caches/modules-2/files-2.1/com.github.fommil.netlib/core/1.1.2/574b480eca62f535fad6d259e144fee3ef24b66e/core-1.1.2.jar" />
         </element>
       </element>
     </root>
