@@ -1,5 +1,7 @@
 package edu.elka.peakadvisor.controllers;
 
+import edu.elka.peakadvisor.calculator.Calculator;
+import edu.elka.peakadvisor.calculator.Rate;
 import edu.elka.peakadvisor.collector.CollectingClient;
 import edu.elka.peakadvisor.collector.YahooClient;
 import edu.elka.peakadvisor.model.CassandraDao;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 
@@ -35,9 +38,11 @@ public class PeakadvisorController {
 
     private CassandraDao dao;
 
+    private Calculator calculator;
+
     public PeakadvisorController() {
         dao = new CassandraDao(cluster,session,cassandraTemplate);
-
+        calculator = new Calculator("../calculator/dataset.arff");
     }
 
 //    @RequestMapping("/")
@@ -83,7 +88,7 @@ public class PeakadvisorController {
     ){
         String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
 
-        try {
+        /*try {
             Method m = Rates.class.getMethod("get"+cur);
             for(int ts = start; ts <= end; ts+=3600){
                 dao = new CassandraDao(cluster,session,cassandraTemplate);
@@ -97,8 +102,13 @@ public class PeakadvisorController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }*/
+        ArrayList<Rate> predictedRates = calculator.predictRates(7);
+        for (Rate rate : predictedRates) {
+            returner += "\"" + rate.getTimestamp() + "\": \"" + rate.getPrice() + "\",\n";
         }
-            return returner;
+        returner += "}}";
+        return returner;
 
     }
 

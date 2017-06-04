@@ -1,26 +1,27 @@
 package edu.elka.peakadvisor.calculator;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Created by sylwia on 5/26/17.
  */
 public class Rate implements Serializable {
 
-    public Rate (Double timestamp, Double price)
+    public Rate (Timestamp timestamp, double price)
     {
         this.timestamp = timestamp;
         this.price = price;
     }
 
-    private Double timestamp;
-    private Double price;
+    private Timestamp timestamp;
+    private double price;
 
-    public Double getTimestamp () {
+    public Timestamp getTimestamp () {
         return timestamp;
     }
 
-    public Double getPrice () {
+    public double getPrice () {
         return price;
     }
 }
