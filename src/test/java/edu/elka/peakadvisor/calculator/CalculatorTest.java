@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CalculatorTest {
 
-    private Calculator calculator=new Calculator("test-dataset.arff");
+    private Calculator calculator=new Calculator();
 
     @Test
     void calculateProfit() {
