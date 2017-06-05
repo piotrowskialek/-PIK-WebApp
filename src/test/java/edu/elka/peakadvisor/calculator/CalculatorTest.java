@@ -11,11 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CalculatorTest {
 
-    private Calculator calculator=new Calculator();
 
-    @Test
-    void calculateProfit() {
-        assertEquals(0, new ArrayList<Double>());
-    }
+//    private Calculator calculator=new Calculator();
+//
+
+//    @Test
+//    void calculateProfit() {
+//        assertEquals(0, new ArrayList<Double>());
+//    }
 
 }

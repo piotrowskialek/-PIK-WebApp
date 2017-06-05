@@ -106,6 +106,37 @@ public class PeakadvisorController {
             if(end>maxTimestamp) end = maxTimestamp;
         }*/
 
+        if(start>end){
+            return returner+"} }";
+        }
+
+        //zaokraglanie do najblizszej wielokrotnosci 3600
+        {
+            int modulo_start = start % 3600;
+            int modulo_end = end % 3600;
+
+            if (modulo_start < 3600 / 2) {
+                start = start - modulo_start;
+            } else {
+                start = start + 3600 - modulo_start;
+            }
+
+            if (modulo_end < 3600 / 2) {
+                end = end - modulo_end;
+            } else {
+                end = end + 3600 - modulo_end;
+            }
+        }
+
+
+        /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
+        {
+            int minTimestamp = getMinTimestampFromDB();
+            int maxTimestamp = getMaxTimestampFromDB();
+            if(start<minTimestamp) start = minTimestamp;
+            if(end>maxTimestamp) end = maxTimestamp;
+        }*/
+
         try {
             List<Double> prices = dao.getPricesWithTimestampRange(cur, start, end);
             ArrayList<Rate> rates = new ArrayList<>();
