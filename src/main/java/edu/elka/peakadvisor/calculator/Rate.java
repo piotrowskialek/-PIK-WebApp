@@ -1,5 +1,7 @@
 package edu.elka.peakadvisor.calculator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 /**
@@ -7,20 +9,20 @@ import java.io.Serializable;
  */
 public class Rate implements Serializable {
 
-    public Rate (Double timestamp, Double price)
+    public Rate (long timestamp, double price)
     {
         this.timestamp = timestamp;
         this.price = price;
     }
 
-    private Double timestamp;
-    private Double price;
+    private long timestamp;
+    private double price;
 
-    public Double getTimestamp () {
+    public long getTimestamp () {
         return timestamp;
     }
 
-    public Double getPrice () {
+    public double getPrice () {
         return price;
     }
 }
