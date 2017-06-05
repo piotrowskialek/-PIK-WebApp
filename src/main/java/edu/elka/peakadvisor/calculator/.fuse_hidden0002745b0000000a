@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package edu.elka.peakadvisor.calculator;
 
 import java.util.ArrayList;
@@ -61,3 +62,4 @@ public class Calculator {
     }
 
 }
+
