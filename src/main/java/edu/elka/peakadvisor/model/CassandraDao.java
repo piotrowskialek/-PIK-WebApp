@@ -8,34 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
  * Created by apiotrowski on 25.05.2017.
  */
 
-
+@Component
 public class CassandraDao {
 
     @Autowired
     private CassandraClusterFactoryBean cluster;
 
     @Autowired
-    private CassandraSessionFactoryBean session;    //cos nie owija automatycznie
+    private CassandraSessionFactoryBean session;
 
     @Autowired
     private CassandraOperations cassandraTemplate;
 
-    public CassandraDao(CassandraClusterFactoryBean cluster, CassandraSessionFactoryBean session,
-                        CassandraOperations cassandraTemplate) {
-        this.cluster=cluster;
-        this.session=session;
-        this.cassandraTemplate=cassandraTemplate;
-    }
 
     public void saveLatest(Latest latest){
         CassandraOperations template = this.cassandraTemplate;
@@ -81,6 +78,61 @@ public class CassandraDao {
         //tak wiem ze to ma podatnosc, ale jest problem z cudzyslowami przy normalnym chainowaniu
         //chainuje "rates.btc" zamiast rates.btc, nie potrafie tego naprawic
         return result;
+    }
+
+    public List<Double> getPricesWithTimestampRange(String name, int timestampStart, int timestampEnd){
+
+        CassandraOperations template = this.cassandraTemplate;
+        Select selectStatement = QueryBuilder
+                .select()   //znowu nie dziala bez cydzyslowow, trzeba wszystko wybierac
+                .from("Latest")
+                .allowFiltering();
+
+        selectStatement.where(QueryBuilder.gte("timestamp",timestampStart));
+        selectStatement.where(QueryBuilder.lte("timestamp",timestampEnd));
+        List<Latest> queryResult = template.select(selectStatement,Latest.class);
+
+        List<Double> result = queryResult.stream().map((l)->{
+            try {
+
+                return (Double) l.getRates().getClass()
+                        .getMethod("get"+name.toUpperCase()).invoke(l.getRates());
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
+
+        return result;
+    }
+
+    public CassandraClusterFactoryBean getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(CassandraClusterFactoryBean cluster) {
+        this.cluster = cluster;
+    }
+
+    public CassandraSessionFactoryBean getSession() {
+        return session;
+    }
+
+    public void setSession(CassandraSessionFactoryBean session) {
+        this.session = session;
+    }
+
+    public CassandraOperations getCassandraTemplate() {
+        return cassandraTemplate;
+    }
+
+    public void setCassandraTemplate(CassandraOperations cassandraTemplate) {
+        this.cassandraTemplate = cassandraTemplate;
     }
 
 }
