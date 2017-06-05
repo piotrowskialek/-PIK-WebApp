@@ -73,7 +73,7 @@ public class PeakadvisorController {
             @RequestParam(value="start", defaultValue="0") Integer start,
             @RequestParam(value="end", defaultValue="0") Integer end
     ){
-        String returner="{ \"currency\":\""+cur+"\", \"times\": [ ";
+        String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
 
         if(start>end){
             return returner+"} }";
@@ -116,10 +116,12 @@ public class PeakadvisorController {
 
             ArrayList<Rate> predictedRates = calculator.predictRates(rates, start, end);
             for (Rate rate : predictedRates) {
-                returner += "{" + rate.getTimestamp() + ": " + rate.getPrice() + "}, ";
+                returner += "\"" + rate.getTimestamp() + "\" : \"" + rate.getPrice() + "\" ";
+                if (rate != predictedRates.get(predictedRates.size() - 1))
+                    returner += ", ";
             }
 
-            returner += "]}";
+            returner += "}}";
         } catch (Exception e) {
             e.printStackTrace();
         }
