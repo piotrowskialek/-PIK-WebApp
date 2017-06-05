@@ -1,5 +1,7 @@
 package edu.elka.peakadvisor.controllers;
 
+import edu.elka.peakadvisor.calculator.Calculator;
+import edu.elka.peakadvisor.calculator.Rate;
 import edu.elka.peakadvisor.collector.CollectingClient;
 import edu.elka.peakadvisor.collector.YahooClient;
 import edu.elka.peakadvisor.model.CassandraDao;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -36,10 +40,13 @@ public class PeakadvisorController {
     @Autowired
     private CassandraDao dao;
 
+    @Autowired
+    private Calculator calculator;
+
     @RequestMapping("/")
     public String index(){
 
-       //fake database to test getValue() method:
+        //fake database to test getValue() method:
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
         int noOfRows = 20;
@@ -66,7 +73,7 @@ public class PeakadvisorController {
             @RequestParam(value="start", defaultValue="0") Integer start,
             @RequestParam(value="end", defaultValue="0") Integer end
     ){
-        String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
+        String returner="{ \"currency\":\""+cur+"\", \"times\": [ ";
 
         if(start>end){
             return returner+"} }";
@@ -100,17 +107,19 @@ public class PeakadvisorController {
         }*/
 
         try {
-            Method m = Rates.class.getMethod("get"+cur);
-            for(int ts = start; ts <= end; ts+=3600){
-//                dao = new CassandraDao(cluster,session,cassandraTemplate);
-                returner += "\""+ts+"\":\""+ m.invoke(dao.readOne(ts).getRates(), null) +"\"";
-                if(ts != end){
-                    returner += ", ";
-                }
-                else if(ts == end){
-                    returner += " } }";
-                }
+            List<Double> prices = dao.getPricesWithTimestampRange(cur, start, end);
+            ArrayList<Rate> rates = new ArrayList<>();
+            int i = 0;
+            for (int timestamp = start; i < prices.size(); timestamp += 3600, ++i) {
+                rates.add(new Rate(timestamp, prices.get(i)));
             }
+
+            ArrayList<Rate> predictedRates = calculator.predictRates(rates, start, end);
+            for (Rate rate : predictedRates) {
+                returner += "{" + rate.getTimestamp() + ": " + rate.getPrice() + "}, ";
+            }
+
+            returner += "]}";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,6 +161,14 @@ public class PeakadvisorController {
         this.cassandraTemplate = cassandraTemplate;
     }
 
+    public Calculator getCalculator() {
+        return calculator;
+    }
+
+    public void setCalculator(Calculator calculator) {
+        this.calculator = calculator;
+    }
+
     public CassandraClusterFactoryBean getCluster() {
         return cluster;
     }
@@ -181,4 +198,3 @@ public class PeakadvisorController {
         }}).start();
     }
 }
-
