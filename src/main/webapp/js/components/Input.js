@@ -3,20 +3,41 @@
  */
 import React from 'react';
 
-import PredictionButton from "./PredictionButton";
+import Datetime from 'react-datetime';
 
 export default class Input extends React.Component {
+    constructor(){
+        super();
+        this.state = {start: [],
+        end : [],
+        currency : []}
+    }
+
+    setCurrency(e){
+        this.setState({currency: e.target.value})
+    }
+
+    setStart(time){
+        this.setState({start : time.unix()});
+
+    }
+
+    setEnd(time) {
+        this.setState({end : time.unix()});
+    }
+    sendData(){
+        this.props.changeSDate(this.state.start);
+        this.props.changeEDate(this.state.end);
+    }
+
     render() {
+
         return (
-        <div>    <div class="col-lg-6">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                    <input type="text" class="form-control" placeholder="Search for currency"/>
-                </div>
-            </div>
-            <PredictionButton/>
+        <div>
+            <div id="1"><Datetime onChange={this.setStart.bind(this)} /></div>
+            <div id="2"><Datetime onChange={this.setEnd.bind(this)}/></div>
+            <input onChange={this.setCurrency.bind(this)}/>
+            <button onClick={this.sendData.bind(this)}>Go</button>
         </div>
     )
     }
