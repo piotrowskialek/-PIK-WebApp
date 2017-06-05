@@ -4,9 +4,11 @@
 import Chart from 'chart.js';
 import React from 'react';
 
+
+
 export default class ChartComponent extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.data = {
             "currency": "ZWL",
             "times": {
@@ -32,43 +34,52 @@ export default class ChartComponent extends React.Component {
                 "68400": "22.0"
             }
         }
+
+
+        this.state = {currency : [],
+                        times: [],
+        values : []};
+
+
+        this.updateData = this.updateData.bind(this);
+        this.renderChart = this.renderChart.bind(this);
+
         this.values = [];
         this.timestamps = [];
         this.getValues();
+
     }
-    getValues(){
-        for (var key in this.data['times']){
-            console.log(key)
+
+    getValues() {
+        for (var key in this.data['times']) {
+            // console.log(key)
             this.timestamps.push(key);
             this.values.push(this.data['times'][key]);
         }
-        // alert(this.data['times']['0'])
-        // console.log(this.timestamps[0])
-        // this.renderChart();
-        // alert(this.values[2])
     }
-    // componentDidMount() {
-    //     // let xmlHttp = new XMLHttpRequest();
-    //     // xmlHttp.open("GET", 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=0&end=68400'); // false for synchronous request
-    //     // xmlHttp.send(null);
-    //     // console.log(xmlHttp.responseText);
-    //     //
-    //
-    //
-    // };
-    componentDidMount(){
+
+
+    updateData(){
+        let times = this.state.times;
+        console.log(times);
+        console.log(this.state.values);
+        console.log(this.state.currency);
+        // this.values = this.state.values;
+        this.currency = this.state.currency;
+        // this.timestamps = this.state.times;
+    }
+
+    renderChart(){
         let chartCanvas = this.refs.chart;
-        // alert(this.timestamps.length);
+
 
         let myChart = new Chart(chartCanvas, {type: 'line',
                 data: {
-                    // labels: [new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString(),
-                    //     new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString()],
-                    labels: this.timestamps,
+                    labels: this.state.times,
                     datasets: [{
-                        label: this.data['currency'],
+                        label: this.state.currency,
                         // data: [12, 20, 3, 5, 3, 4, 5, 6],
-                        data: this.values,
+                        data: this.state.values,
                         fill: false,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
@@ -117,6 +128,36 @@ export default class ChartComponent extends React.Component {
 
         this.setState({chart: myChart});
     }
+    componentDidMount(){
+        var rest, mime, client;
+
+        rest = require('rest'),
+            mime = require('rest/interceptor/mime');
+
+        client = rest.wrap(mime);
+        client({ path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=0&end=68400' }).then(response => {
+            var a = JSON.parse(response['entity']);
+            this.setState({currency : a['currency']});
+            for (let key in a['times']){
+               this.state.times.push(key);
+               this.state.values.push(a['times'][key]);
+               console.log("hyhyyhyh")
+               console.log(a['times'][key]);
+            }
+
+        });
+        this.updateData();
+        // console.log(this.state.currency);
+        // console.log(this.currency);
+
+
+    }
+
+    handleChange(e){
+       const currency = e.target.value;
+       this.setState({currency})
+    }
+
     render() {
 
         // this.renderChart();
@@ -124,7 +165,10 @@ export default class ChartComponent extends React.Component {
         return (
             <div>
                 <canvas ref={'chart'} height={'400'} width={'600'}/>
+                <button onClick={this.renderChart.bind(this)}>GO</button>
+                <input onChange={this.handleChange.bind(this)}/>
             </div>
+
         )
     };
 }
