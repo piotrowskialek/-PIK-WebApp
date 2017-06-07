@@ -44,6 +44,8 @@ public class CassandraConfig {
         return new MappingCassandraConverter(mappingContext());
     }
 
+    ll
+
     xD
     @BeanxD
     public CassandraSessionFactoryBean session() throws Exception {
