@@ -47,7 +47,7 @@ public class CassandraConfig {
     uswiadom to
     sobie sobied
 
-    ll
+    lld
 
     xD
 
