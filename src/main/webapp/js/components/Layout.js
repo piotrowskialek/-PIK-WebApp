@@ -23,6 +23,8 @@ export default class Layout extends React.Component {
         this.setStartDate = this.setStartDate.bind(this);
         this.setEndDate = this.setEndDate.bind(this);
 
+
+        this.state ={title : "Peak Advisor"}
     }
 
     setStartDate(date) {
@@ -40,6 +42,10 @@ export default class Layout extends React.Component {
         this.currency = cur;
         this.setState({currency : cur},this.sendStateToParent);
     }
+    setTitle(){
+        console.log("CHanging title")
+        this.setState({title : "PeaknieAdbisor"})
+    }
 
     render() {
         return (
@@ -47,9 +53,9 @@ export default class Layout extends React.Component {
                 <div>start: {this.startDate}</div>
                 <div>end: {this.endDate}</div>
                 <div>curency: {this.currency}</div>
-                <Title word1="Peak" word2="Advisor"/>
-
-                <Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>
+                <Title title={this.state.title}/>
+                <button onClick={this.setTitle}>Change title</button>
+                {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}
                 <ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>
             </div>
         );

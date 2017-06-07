@@ -6,58 +6,58 @@ import React from 'react';
 
 {/*<<<<<<< Updated upstream*/}
 {/*export default class ChartComponent extends React.Component {*/}
-    {/*constructor() {*/}
-        {/*super();*/}
-        {/*this.data = {*/}
-            {/*"currency": "ZWL",*/}
-            {/*"times": {*/}
-                {/*"0": "3.0",*/}
-                {/*"3600": "4.0",*/}
-                {/*"7200": "5.0",*/}
-                {/*"10800": "6.0",*/}
-                {/*"14400": "7.0",*/}
-                {/*"18000": "8.0",*/}
-                {/*"21600": "9.0",*/}
-                {/*"25200": "10.0",*/}
-                {/*"28800": "11.0",*/}
-                {/*"32400": "12.0",*/}
-                {/*"36000": "13.0",*/}
-                {/*"39600": "14.0",*/}
-                {/*"43200": "15.0",*/}
-                {/*"46800": "16.0",*/}
-                {/*"50400": "17.0",*/}
-                {/*"54000": "18.0",*/}
-                {/*"57600": "19.0",*/}
-                {/*"61200": "20.0",*/}
-                {/*"64800": "21.0",*/}
-                {/*"68400": "22.0"*/}
-            {/*}*/}
-        {/*}*/}
-        {/*this.values = [];*/}
-        {/*this.timestamps = [];*/}
-        {/*this.getValues();*/}
-    {/*}*/}
-    {/*getValues(){*/}
-        {/*for (var key in this.data['times']){*/}
-            {/*console.log(key)*/}
-            {/*this.timestamps.push(key);*/}
-            {/*this.values.push(this.data['times'][key]);*/}
-        {/*}*/}
-        {/*// alert(this.data['times']['0'])*/}
-        {/*// console.log(this.timestamps[0])*/}
-        {/*// this.renderChart();*/}
-        {/*// alert(this.values[2])*/}
-    {/*}*/}
-    {/*// componentDidMount() {*/}
-    {/*//     // let xmlHttp = new XMLHttpRequest();*/}
-    {/*//     // xmlHttp.open("GET", 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=0&end=68400'); // false for synchronous request*/}
-    {/*//     // xmlHttp.send(null);*/}
-    {/*//     // console.log(xmlHttp.responseText);*/}
-    {/*//     //*/}
-    {/*//*/}
-    {/*//*/}
-    {/*// };*/}
-    {/*componentDidMount(){*/}
+{/*constructor() {*/}
+{/*super();*/}
+{/*this.data = {*/}
+{/*"currency": "ZWL",*/}
+{/*"times": {*/}
+{/*"0": "3.0",*/}
+{/*"3600": "4.0",*/}
+{/*"7200": "5.0",*/}
+{/*"10800": "6.0",*/}
+{/*"14400": "7.0",*/}
+{/*"18000": "8.0",*/}
+{/*"21600": "9.0",*/}
+{/*"25200": "10.0",*/}
+{/*"28800": "11.0",*/}
+{/*"32400": "12.0",*/}
+{/*"36000": "13.0",*/}
+{/*"39600": "14.0",*/}
+{/*"43200": "15.0",*/}
+{/*"46800": "16.0",*/}
+{/*"50400": "17.0",*/}
+{/*"54000": "18.0",*/}
+{/*"57600": "19.0",*/}
+{/*"61200": "20.0",*/}
+{/*"64800": "21.0",*/}
+{/*"68400": "22.0"*/}
+{/*}*/}
+{/*}*/}
+{/*this.values = [];*/}
+{/*this.timestamps = [];*/}
+{/*this.getValues();*/}
+{/*}*/}
+{/*getValues(){*/}
+{/*for (var key in this.data['times']){*/}
+{/*console.log(key)*/}
+{/*this.timestamps.push(key);*/}
+{/*this.values.push(this.data['times'][key]);*/}
+{/*}*/}
+{/*// alert(this.data['times']['0'])*/}
+{/*// console.log(this.timestamps[0])*/}
+{/*// this.renderChart();*/}
+{/*// alert(this.values[2])*/}
+{/*}*/}
+{/*// componentDidMount() {*/}
+{/*//     // let xmlHttp = new XMLHttpRequest();*/}
+{/*//     // xmlHttp.open("GET", 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=0&end=68400'); // false for synchronous request*/}
+{/*//     // xmlHttp.send(null);*/}
+{/*//     // console.log(xmlHttp.responseText);*/}
+{/*//     //*/}
+{/*//*/}
+{/*//*/}
+{/*// };*/}
+{/*componentDidMount(){*/}
 {/*=======*/}
 
 export default class ChartComponent extends React.Component {
@@ -255,7 +255,7 @@ export default class ChartComponent extends React.Component {
             console.log("Times:" + this.times);
             console.log("Values" + this.values);
             this.renderChart();
-            },500);
+        },500);
 
     }
 

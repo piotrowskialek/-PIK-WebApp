@@ -3,7 +3,6 @@
  */
 import React from 'react';
 
-import PredictionButton from "./PredictionButton";
 
 export default class Input extends React.Component {
 
@@ -53,7 +52,6 @@ export default class Input extends React.Component {
                         <input type="text" class="form-control" placeholder="Search for currency"/>
                     </div>
                 </div>
-                <PredictionButton/>
             </div>
         )
     }
