@@ -47,7 +47,8 @@ public class CassandraConfig {
     ll
 
     xD
-    @BeanxD
+
+    @BeanxDddd
     public CassandraSessionFactoryBean session() throws Exception {
         xD
         CassandraSessionFactoryBeaxDn session = new CassandraSessionFactoryBean();
