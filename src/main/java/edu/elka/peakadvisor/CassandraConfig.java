@@ -45,7 +45,7 @@ public class CassandraConfig {
 
     jestem bogiem
     uswiadom to
-    sobie sobie
+    sobie sobied
 
     ll
 
