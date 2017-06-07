@@ -39,6 +39,7 @@ public class CassandraConfig {
         return mappingContext;
     }
 
+    dd
     @Bean
     public CassandraConverter converter() throws Exception {
         return new MappingCassandraConverter(mappingContext());
