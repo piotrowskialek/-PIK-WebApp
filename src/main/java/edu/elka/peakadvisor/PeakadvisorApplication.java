@@ -1,16 +1,11 @@
 package edu.elka.peakadvisor;
 
-import edu.elka.peakadvisor.calculator.Calculator;
-import edu.elka.peakadvisor.calculator.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class PeakadvisorApplication {
