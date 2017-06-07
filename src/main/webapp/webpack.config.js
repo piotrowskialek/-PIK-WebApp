@@ -4,6 +4,7 @@
          path: __dirname + '/bin',
 
          filename: 'app2.bundle.js'
+
      },
      module: {
      	loaders: [{

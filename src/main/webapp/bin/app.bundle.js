@@ -25786,6 +25786,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 
+var HttpClient = function HttpClient() {
+    this.get = function (aUrl, aCallback) {
+        var anHttpRequest = new XMLHttpRequest();
+        anHttpRequest.onreadystatechange = function () {
+            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200) aCallback(anHttpRequest.responseText);
+        };
+
+        anHttpRequest.open("GET", aUrl, true);
+        anHttpRequest.send(null);
+    };
+};
+
 var ChartComponent = function (_React$Component) {
     _inherits(ChartComponent, _React$Component);
 
@@ -25829,7 +25841,6 @@ var ChartComponent = function (_React$Component) {
         key: 'getValues',
         value: function getValues() {
             for (var key in this.data['times']) {
-                console.log(key);
                 this.timestamps.push(key);
                 this.values.push(this.data['times'][key]);
             }
@@ -25848,60 +25859,84 @@ var ChartComponent = function (_React$Component) {
         //
         // };
 
+
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var chartCanvas = this.refs.chart;
-            // alert(this.timestamps.length);
-
-            var myChart = new _chart2.default(chartCanvas, { type: 'line',
-                data: {
-                    // labels: [new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString(),
-                    //     new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString()],
-                    labels: this.timestamps,
-                    datasets: [{
-                        label: this.data['currency'],
-                        // data: [12, 20, 3, 5, 3, 4, 5, 6],
-                        data: this.values,
-                        fill: false,
-                        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-                        borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
-                        borderWidth: 3
-                    }]
-                }
-            }
-            // {
-            //     label: "USD",
-            //     data: [5, 2, 4, 12, 4, 2, 1, 12],
-            //     fill: false,
-            //     backgroundColor: [
-            //         'rgba(255, 99, 132, 0.2)',
-            //         'rgba(54, 162, 235, 0.2)',
-            //         'rgba(255, 206, 86, 0.2)',
-            //         'rgba(75, 192, 192, 0.2)',
-            //         'rgba(153, 102, 255, 0.2)',
-            //         'rgba(255, 159, 64, 0.2)'
-            //     ],
-            //     borderColor: [
-            //         // 'rgba(255,99,132,1)',
-            //         // 'rgba(54, 162, 235, 1)',
-            //         'rgba(255, 206, 86, 1)',
-            //         'rgba(75, 192, 192, 1)',
-            //         'rgba(153, 102, 255, 1)',
-            //         'rgba(255, 159, 64, 1)'
-            //     ],
-            //     borderWidth: 3
-            // }]
-
-            );
-
-            this.setState({ chart: myChart });
+            // let chartCanvas = this.refs.chart;
+            // // alert(this.timestamps.length);
+            //
+            // let myChart = new Chart(chartCanvas, {type: 'line',
+            //         data: {
+            //             // labels: [new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString(),
+            //             //     new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString()],
+            //             labels: this.timestamps,
+            //             datasets: [{
+            //                 label: this.data['currency'],
+            //                 // data: [12, 20, 3, 5, 3, 4, 5, 6],
+            //                 data: this.values,
+            //                 fill: false,
+            //                 backgroundColor: [
+            //                     'rgba(255, 99, 132, 0.2)',
+            //                     'rgba(54, 162, 235, 0.2)',
+            //                     'rgba(255, 206, 86, 0.2)',
+            //                     'rgba(75, 192, 192, 0.2)',
+            //                     'rgba(153, 102, 255, 0.2)',
+            //                     'rgba(255, 159, 64, 0.2)'
+            //                 ],
+            //                 borderColor: [
+            //                     'rgba(255,99,132,1)',
+            //                     'rgba(54, 162, 235, 1)',
+            //                     'rgba(255, 206, 86, 1)',
+            //                     'rgba(75, 192, 192, 1)',
+            //                     'rgba(153, 102, 255, 1)',
+            //                     'rgba(255, 159, 64, 1)'
+            //                 ],
+            //                 borderWidth: 3
+            //             }]
+            //         }
+            //     }
+            //     // {
+            //     //     label: "USD",
+            //     //     data: [5, 2, 4, 12, 4, 2, 1, 12],
+            //     //     fill: false,
+            //     //     backgroundColor: [
+            //     //         'rgba(255, 99, 132, 0.2)',
+            //     //         'rgba(54, 162, 235, 0.2)',
+            //     //         'rgba(255, 206, 86, 0.2)',
+            //     //         'rgba(75, 192, 192, 0.2)',
+            //     //         'rgba(153, 102, 255, 0.2)',
+            //     //         'rgba(255, 159, 64, 0.2)'
+            //     //     ],
+            //     //     borderColor: [
+            //     //         // 'rgba(255,99,132,1)',
+            //     //         // 'rgba(54, 162, 235, 1)',
+            //     //         'rgba(255, 206, 86, 1)',
+            //     //         'rgba(75, 192, 192, 1)',
+            //     //         'rgba(153, 102, 255, 1)',
+            //     //         'rgba(255, 159, 64, 1)'
+            //     //     ],
+            //     //     borderWidth: 3
+            //     // }]
+            //
+            // );
+            //
+            // this.setState({chart: myChart});
         }
     }, {
         key: 'render',
         value: function render() {
 
             // this.renderChart();
+            var client = new HttpClient();
+            client.get('http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=0&end=68400', function (response) {
+                for (var a in response['times']) {
+                    console.log("nan");
+                    console.log(a);
+                    // this.timestamps.push(key);
+                    // this.values.push(this.data['times'][key]);
+                }
+            });
 
             return _react2.default.createElement(
                 'div',

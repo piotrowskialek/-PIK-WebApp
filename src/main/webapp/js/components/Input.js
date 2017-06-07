@@ -3,9 +3,10 @@
  */
 import React from 'react';
 
-import PredictionButton from "./PredictionButton";
+import Datetime from 'react-datetime';
 
 export default class Input extends React.Component {
+<<<<<<< HEAD
 
     constructor() {
         super();
@@ -24,10 +25,26 @@ export default class Input extends React.Component {
     setStart(time) {
         const t = time.unix();
         this.setState({start: t});
+=======
+    constructor(){
+        super();
+        this.state = {start: [],
+        end : [],
+        currency : []}
+    }
+
+    setCurrency(e){
+        this.setState({currency: e.target.value})
+    }
+
+    setStart(time){
+        this.setState({start : time.unix()});
+>>>>>>> d55f6bf17ea0889bbde6ef33e415fc333d2a1324
 
     }
 
     setEnd(time) {
+<<<<<<< HEAD
         const t = time.unix();
         this.setState({end: t});
     }
@@ -40,10 +57,19 @@ export default class Input extends React.Component {
         this.props.changeSDate(st);
         this.props.changeEDate(et);
 
+=======
+        this.setState({end : time.unix()});
+    }
+    sendData(){
+        this.props.changeSDate(this.state.start);
+        this.props.changeEDate(this.state.end);
+>>>>>>> d55f6bf17ea0889bbde6ef33e415fc333d2a1324
     }
 
     render() {
+
         return (
+<<<<<<< HEAD
             <div>
                 <div class="col-lg-6">
                     <div class="input-group">
@@ -56,5 +82,14 @@ export default class Input extends React.Component {
                 <PredictionButton/>
             </div>
         )
+=======
+        <div>
+            <div id="1"><Datetime onChange={this.setStart.bind(this)} /></div>
+            <div id="2"><Datetime onChange={this.setEnd.bind(this)}/></div>
+            <input onChange={this.setCurrency.bind(this)}/>
+            <button onClick={this.sendData.bind(this)}>Go</button>
+        </div>
+    )
+>>>>>>> d55f6bf17ea0889bbde6ef33e415fc333d2a1324
     }
 }

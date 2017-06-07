@@ -6,6 +6,7 @@ import React from "react"
 import Title from './Title'
 import ChartComponent from './ChartComponent'
 import Input from "./Input";
+import DatePicker from './DatePicker'
 
 export default class Layout extends React.Component {
     constructor() {
@@ -19,7 +20,6 @@ export default class Layout extends React.Component {
         this.startDate ="0"
         this.endDate ="68000"
         this.currency ="USD"
-
         this.setStartDate = this.setStartDate.bind(this);
         this.setEndDate = this.setEndDate.bind(this);
 
@@ -36,10 +36,6 @@ export default class Layout extends React.Component {
         this.endDate = date;
         this.setState({endDate: date},this.sendStateToParent);
     }
-    setCur(cur) {
-        this.currency = cur;
-        this.setState({currency : cur},this.sendStateToParent);
-    }
 
     render() {
         return (
@@ -49,8 +45,11 @@ export default class Layout extends React.Component {
                 <div>curency: {this.currency}</div>
                 <Title word1="Peak" word2="Advisor"/>
 
+
                 <Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>
                 <ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>
+
+
             </div>
         );
     }
