@@ -43,6 +43,10 @@ public class CassandraConfig {
         return new (mappaasaaingContext());
     }
 
+    jestem bogiem
+    uswiadom to
+    sobie sobie
+
     ll
 
     xD
