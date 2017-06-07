@@ -8,51 +8,46 @@ export default class Input extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            start: [],
-            end: [],
-            currency: []
-        }
+        this.state = {currency: ""};
     }
 
-    setCurrency(e) {
-        const cur = e.target.value;
-        this.setState({currency: cur})
+    handleClick() {
+        console.log("handleClick")
+        this.props.changeTitle()
     }
 
-    setStart(time) {
-        const t = time.unix();
-        this.setState({start: t});
-
+    _handleChange(e) {
+        const currency = e.target.value;
+        this.setState({currency: currency});
     }
 
-    setEnd(time) {
-        const t = time.unix();
-        this.setState({end: t});
-    }
 
-    sendData() {
-        const st = this.state.start;
-        const et = this.state.end;
-        const c = this.state.currency;
-        this.props.setCur(c);
-        this.props.changeSDate(st);
-        this.props.changeEDate(et);
-
+    _handleForm(e) {
+        e.preventDefault();
+        console.log("submited")
+        this.props.changeTitle()
     }
 
     render() {
         return (
             <div>
-                <div class="col-lg-6">
-                    <div class="input-group">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                        <input type="text" class="form-control" placeholder="Search for currency"/>
-                    </div>
+                <div>
+                    Wpisz walute:
+                   <form onSubmit={this._handleForm.bind(this)}>
+                       <label>
+                           Currency
+                        <input  value={this.state.currency} onChange={this._handleChange.bind(this)}/>
+                       </label>
+                       <input type="submit" value="Submit"/>
+                   </form>
+                    <button onClick={this.handleClick.bind(this)}>Change Title!</button>
+                </div>
+                <div>
+                    Wpisana waluta: {this.state.currency}
                 </div>
             </div>
+
         )
     }
+
 }

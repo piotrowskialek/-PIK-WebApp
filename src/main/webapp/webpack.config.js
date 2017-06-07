@@ -2,7 +2,7 @@
      entry: './js/app.js',
      output: {
          path: __dirname + '/bin',
-         filename: 'app2.bundle.js'
+         filename: 'app.bundle.js'
      },
      module: {
      	loaders: [{
