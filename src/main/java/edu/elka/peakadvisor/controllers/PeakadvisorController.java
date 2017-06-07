@@ -114,7 +114,7 @@ public class PeakadvisorController {
                 rates.add(new Rate(timestamp, prices.get(i)));
             }
 
-            ArrayList<Rate> predictedRates = calculator.predictRates(rates, start, end);
+            ArrayList<Rate> predictedRates = calculator.predictRatesLinear(rates, start, end);
             for (Rate rate : predictedRates) {
                 returner += "\"" + rate.getTimestamp() + "\" : \"" + rate.getPrice() + "\" ";
                 if (rate != predictedRates.get(predictedRates.size() - 1))
