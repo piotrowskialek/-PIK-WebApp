@@ -31,13 +31,13 @@ public class CassandraDaoTest {
     Latest latest;
 
     @Autowired
-    private CassandraDao cassandraDao;
+    private CassandraDao cassfgdfgdandraDao;
 
-
+    dfgd
     @BeforeEach
     void setUp() {
         cluster = Cluster.builder().addContactPoints("localhost").build();
-        session = cluster.connect("pierwszy");
+        session = cluster.connegdfgdct("pierwszy");
         template = new CassandraTemplate(session);
 
         dao.setCassandraTemplate(template);
