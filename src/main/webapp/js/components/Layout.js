@@ -6,50 +6,45 @@ import React from "react"
 import Title from './Title'
 import ChartComponent from './ChartComponent'
 import Input from "./Input";
-import DatePicker from './DatePicker'
 
 export default class Layout extends React.Component {
     constructor() {
         super();
-        this.state = {
-            startDate: "0",
-            endDate: "68000",
-            currency: "USD"
-        }
-
-        this.startDate ="0"
-        this.endDate ="68000"
-        this.currency ="USD"
-        this.setStartDate = this.setStartDate.bind(this);
-        this.setEndDate = this.setEndDate.bind(this);
-
+        this.state ={title : "Peak Advisor"}
     }
 
-    setStartDate(date) {
-        this.startDate = date;
-        console.log("start" + date)
-        this.setState({startDate: date});
+
+    changeTitle(){
+        console.log("CHanging title")
+        this.setState({title : "PeaknieAdbisor"})
     }
 
-    setEndDate(date) {
-        console.log("end" + date)
-        this.endDate = date;
-        this.setState({endDate: date},this.sendStateToParent);
-    }
+    downloadData(currency, start, end){
+        var rest, mime, client;
+        rest = require('rest'),
+            mime = require('rest/interceptor/mime');
 
+        client = rest.wrap(mime);
+        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + cur + '&start=' + start + '&end=' + end}).then(response => {
+                console.log(response);
+                var a = JSON.parse(response['entity']);
+                // this.setState({currency : a['currency']});
+                for (let key in a['times']) {
+                    console.log(key);
+                    console.log(a['times'][key]);
+
+                }
+
+            }
+        )
+    }
     render() {
         return (
             <div>
-                <div>start: {this.startDate}</div>
-                <div>end: {this.endDate}</div>
-                <div>curency: {this.currency}</div>
-                <Title word1="Peak" word2="Advisor"/>
-
-
-                <Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>
-                <ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>
-
-
+                <Title title={this.state.title}/>
+                <Input changeTitle={this.changeTitle.bind(this)}/>
+                {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}
+                {/*<ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>*/}
             </div>
         );
     }
