@@ -71,16 +71,19 @@ public class PeakadvisorController {
     public String getValue(
             @RequestParam(value="currency", defaultValue="USD") String cur,
             @RequestParam(value="start", defaultValue="0") Integer start,
-            @RequestParam(value="end", defaultValue="0") Integer end
+            @RequestParam(value="end", defaultValue="0") Integer end,
+            @RequestParam(value="power", defaultValue="1") Integer power
     ){
-        String returner="{ \"currency\":\""+cur+"\", \"times\": { ";
+        String returner="{ \"currency\":\""+cur+"\", \"history\": { ";
 
-        if(start>end){
+        if(start>end) {
             return returner+"} }";
         }
+        long current = System.currentTimeMillis() / 1000;
 
         //zaokraglanie do najblizszej wielokrotnosci 3600
         {
+            long modulo_current = current % 3600;
             int modulo_start = start % 3600;
             int modulo_end = end % 3600;
 
@@ -95,6 +98,12 @@ public class PeakadvisorController {
             } else {
                 end = end + 3600 - modulo_end;
             }
+
+            if (modulo_current < 3600 / 2) {
+                current = current - modulo_current;
+            } else {
+                current = current + 3600 - modulo_current;
+            }
         }
 
 
@@ -107,16 +116,23 @@ public class PeakadvisorController {
         }*/
 
         try {
-            List<Double> prices = dao.getPricesWithTimestampRange(cur, start, end);
+            List<Double> prices = dao.getPricesWithTimestampRange(cur, start, (int) current);
+
             ArrayList<Rate> rates = new ArrayList<>();
             int i = 0;
             for (int timestamp = start; i < prices.size(); timestamp += 3600, ++i) {
                 rates.add(new Rate(timestamp, prices.get(i)));
+                returner += "\"" + timestamp + "\" : \"" + prices.get(i) + "\" ";
+                if (i != (prices.size() - 1))
+                    returner += ", ";
             }
 
-            ArrayList<Rate> predictedRates = calculator.predictRates(rates, start, end);
+            returner += "}, \"predicted\" : {";
+            List<Rate> predictedRates = (power == 1 ? calculator.predictRatesLinear(rates, current, end) :
+                    calculator.predictRatesPolynomial(rates, current, end, power));
+
             for (Rate rate : predictedRates) {
-                returner += "\"" + rate.getTimestamp() + "\" : \"" + rate.getPrice() + "\" ";
+                returner += "\"" + rate.getTimestamp() + "\" : \"" + rate.getPrice() + "\"";
                 if (rate != predictedRates.get(predictedRates.size() - 1))
                     returner += ", ";
             }
