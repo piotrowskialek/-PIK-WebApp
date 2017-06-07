@@ -28,12 +28,14 @@ public class CassandraConfig {
         return cluster;
     }
 
+    xD
 
+            xD
     @Bean
     public CassandraMappingContext mappingContext() throws Exception {
         BasicCassandraMappingContext mappingContext = new BasicCassandraMappingContext();
         mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cluster().getObject(), "pierwszy"));
-
+        xD
         return mappingContext;
     }
 
@@ -42,10 +44,11 @@ public class CassandraConfig {
         return new MappingCassandraConverter(mappingContext());
     }
 
-    @Bean
+    xD
+    @BeanxD
     public CassandraSessionFactoryBean session() throws Exception {
-
-        CassandraSessionFactoryBean session = new CassandraSessionFactoryBean();
+        xD
+        CassandraSessionFactoryBeaxDn session = new CassandraSessionFactoryBean();
         session.setCluster(cluster().getObject());
         session.setKeyspaceName("pierwszy");
         session.setConverter(converter());
