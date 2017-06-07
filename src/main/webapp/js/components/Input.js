@@ -3,42 +3,51 @@
  */
 import React from 'react';
 
-import Datetime from 'react-datetime';
 
 export default class Input extends React.Component {
-    constructor(){
+
+    constructor() {
         super();
-        this.state = {start: [],
-        end : [],
-        currency : []}
+        this.state = {currency: ""};
     }
 
-    setCurrency(e){
-        this.setState({currency: e.target.value})
+    handleClick() {
+        console.log("handleClick")
+        this.props.changeTitle()
     }
 
-    setStart(time){
-        this.setState({start : time.unix()});
-
+    _handleChange(e) {
+        const currency = e.target.value;
+        this.setState({currency: currency});
     }
 
-    setEnd(time) {
-        this.setState({end : time.unix()});
-    }
-    sendData(){
-        this.props.changeSDate(this.state.start);
-        this.props.changeEDate(this.state.end);
+
+    _handleForm(e) {
+        e.preventDefault();
+        console.log("submited")
+        this.props.changeTitle()
     }
 
     render() {
-
         return (
-        <div>
-            <div id="1"><Datetime onChange={this.setStart.bind(this)} /></div>
-            <div id="2"><Datetime onChange={this.setEnd.bind(this)}/></div>
-            <input onChange={this.setCurrency.bind(this)}/>
-            <button onClick={this.sendData.bind(this)}>Go</button>
-        </div>
-    )
+            <div>
+                <div>
+                    Wpisz walute:
+                   <form onSubmit={this._handleForm.bind(this)}>
+                       <label>
+                           Currency
+                        <input  value={this.state.currency} onChange={this._handleChange.bind(this)}/>
+                       </label>
+                       <input type="submit" value="Submit"/>
+                   </form>
+                    <button onClick={this.handleClick.bind(this)}>Change Title!</button>
+                </div>
+                <div>
+                    Wpisana waluta: {this.state.currency}
+                </div>
+            </div>
+
+        )
     }
-    }
+
+}

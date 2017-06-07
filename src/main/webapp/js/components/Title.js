@@ -5,12 +5,15 @@ import React from 'react';
 
 export default class Title extends React.Component{
     render(){
+        const containerStyle = {
+            color: "#7FFFD4"
+        }
         return(
-            <div>
+            <div style={containerStyle}>
                 <p>
                     <h1 class="logo">
-                        <span class="word1">{this.props.word1}</span>
-                        <span class="word2">{this.props.word2}</span>
+                        <span> {this.props.title} </span>
+
                     </h1>
                 </p>
             </div>
