@@ -1,9 +1,9 @@
 package edu.elka.peakadvisor.calculator;
 
 import org.junit.jupiter.api.Test;
-import weka.core.Instances;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,22 +15,53 @@ class CalculatorTest {
     private Calculator calculator = new Calculator();
 
     @Test
-    void predictRatesMonotonic () {
+    void predictRatesMonotonicLinearRegression () {
         ArrayList<Rate> testRates = new ArrayList<>();
         testRates.add(new Rate (1234, 5.6));
         testRates.add(new Rate (3456, 5.6));
-        ArrayList<Rate> result = calculator.predictRates(testRates, 4000, 7603);
+        List<Rate> result = calculator.predictRatesLinear(testRates, 4000, 7603);
         assertEquals(5.6, result.get(0).getPrice());
     }
 
     @Test
-    void predictRatesLinear () {
+    void predictRatesLinearLinearRegression () {
         ArrayList<Rate> testRates = new ArrayList<>();
         testRates.add(new Rate (0, 10));
         testRates.add(new Rate (3600, 20));
-        ArrayList<Rate> result = calculator.predictRates(testRates, 3600, 7200);
-        assertEquals(30, result.get(0).getPrice());
+        List<Rate> result = calculator.predictRatesLinear(testRates, 3600, 7200);
+        assertEquals(15.0, result.get(2).getPrice());
     }
 
+    @Test
+    void predictRatesMonotonicPolynomialRegression7 () {
+        ArrayList<Rate> testRates = new ArrayList<>();
+        testRates.add(new Rate (1234, 5.6));
+        testRates.add(new Rate (3456, 5.6));
+        List<Rate> result = calculator.predictRatesPolynomial(testRates, 4000, 7603, 7);
+        Throwable exception = assertThrows(java.lang.Exception.class, () -> {
+            throw new java.lang.Exception("All class values are the same. At least two class values should be different");
+        });
+        assertEquals("All class values are the same. At least two class values should be different", exception.getMessage());
+    }
 
+    @Test
+    void predictRatesLinearPolynomialRegression3 () {
+        ArrayList<Rate> testRates = new ArrayList<>();
+        testRates.add(new Rate (0, 10));
+        testRates.add(new Rate (3600, 20));
+        List<Rate> result = calculator.predictRatesPolynomial(testRates, 3600, 7200, 3);
+        assertEquals(43.6925, result.get(4).getPrice());
+    }
+
+    @Test
+    void predictRatesPolynomialRegression9 () {
+        ArrayList<Rate> rates = new ArrayList<>();
+        rates.add(new Rate (0, 7.4));
+        rates.add(new Rate (3600, 5.4));
+        rates.add(new Rate (7200, 8.9));
+        rates.add(new Rate (10800, 8.1));
+        rates.add(new Rate(14400, 7.5));
+        List<Rate> result = calculator.predictRatesPolynomial(rates, 14401, 21600, 9);
+        assertEquals(7.403500000000001, result.get(0).getPrice());
+    }
 }
