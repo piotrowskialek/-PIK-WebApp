@@ -8,42 +8,64 @@ export default class Input extends React.Component {
 
     constructor() {
         super();
-        this.state = {currency: ""};
+        this.state = {currency: "",
+            start : "",
+            end : ""};
     }
 
-    handleClick() {
-        console.log("handleClick")
-        this.props.changeTitle()
-    }
 
-    _handleChange(e) {
+    _handleChangeCur(e) {
         const currency = e.target.value;
+        console.log("handling cur")
         this.setState({currency: currency});
+    }
+
+    _handleChangeStart(e) {
+        const start = e.target.value;
+        console.log("handling start")
+        this.setState({start: start});
+    }
+
+    _handleChangeEnd(e) {
+        const end = e.target.value;
+        console.log("handling end")
+        this.setState({end: end});
     }
 
 
     _handleForm(e) {
         e.preventDefault();
-        console.log("submited")
-        this.props.changeTitle()
+        console.log("submitted")
+        this.props.downloadData(this.state.currency, this.state.start, this.state.end)
     }
 
     render() {
         return (
             <div>
                 <div>
-                    Wpisz walute:
                    <form onSubmit={this._handleForm.bind(this)}>
                        <label>
                            Currency
-                        <input  value={this.state.currency} onChange={this._handleChange.bind(this)}/>
+                        <input  value={this.state.currency} onChange={this._handleChangeCur.bind(this)}/>
+                       </label>
+                       <label>
+                           Start
+                           <input value={this.state.start} onChange={this._handleChangeStart.bind(this)}/>
+                       </label>
+                       <label>
+                           End
+                           <input value={this.state.end} onChange={this._handleChangeEnd.bind(this)}/>
                        </label>
                        <input type="submit" value="Submit"/>
                    </form>
-                    <button onClick={this.handleClick.bind(this)}>Change Title!</button>
                 </div>
                 <div>
-                    Wpisana waluta: {this.state.currency}
+                    <ul>
+                        <li>Wpisana waluta: {this.state.currency}</li>
+                    <li>Wpisana poczatek: {this.state.start}</li>
+                    <li>Wpisany koniec {this.state.end}</li>
+                    </ul>
+
                 </div>
             </div>
 
