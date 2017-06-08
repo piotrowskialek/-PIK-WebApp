@@ -25,18 +25,21 @@ export default class Layout extends React.Component {
             mime = require('rest/interceptor/mime');
         console.log(currency, start, end)
 
-        var a;
+        let a;
         client = rest.wrap(mime);
         client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + currency + '&start=' + start + '&end=' + end}).then(response => {
                 console.log(response);
                 a = JSON.parse(response['entity']);
                 console.log("waluta", a['currency'])
-                this.setState({currency : a['currency']})
-            // for (let key in a['history']) {
-            //     console.log(key);
-            //     console.log(a['history'][key]);
-            //
-            // }
+                this.setState({currency: a['currency']})
+                let data = [];
+                let times = [];
+                for (let key in a['history']) {
+                    times.push(key);
+                    data.push(parseFloat(a['history'][key]));
+                }
+                this.setState({times: times})
+                this.setState({data: data})
             }
         )
 
@@ -83,7 +86,7 @@ export default class Layout extends React.Component {
                 <Input changeTitle={this.changeTitle.bind(this)} downloadData={this.downloadData.bind(this)}/>
                 {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}
                 {/*<ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>*/}
-                <ChartComponent currency={this.state.currency}/>
+                <ChartComponent currency={this.state.currency} data={this.state.data} times={this.state.times}/>
                 <div>
                     <canvas ref={'chart'} height={'400'} width={'600'}/>
                 </div>
