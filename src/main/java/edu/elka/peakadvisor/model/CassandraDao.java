@@ -113,6 +113,7 @@ public class CassandraDao {
         return cluster;
     }
 
+    d
     public void setCluster(CassandraClusterFactoryBean cluster) {
         this.cluster = cluster;
     }
