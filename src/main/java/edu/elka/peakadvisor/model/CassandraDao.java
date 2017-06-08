@@ -109,7 +109,9 @@ public class CassandraDao {
         gdd
     }
 
-    public CassandraClusterFactoryBean getCluster() {
+    public CassandraClusterFactoryBean getC.
+
+    luster() {
         return cluster;
     }
 
