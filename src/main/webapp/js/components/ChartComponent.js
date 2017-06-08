@@ -236,6 +236,8 @@ export default class ChartComponent extends React.Component {
             });
 
             this.setState({chart: myChart});
+            // this.state.myChart.update();
+            // this.forceUpdate();
         }
 
     }
