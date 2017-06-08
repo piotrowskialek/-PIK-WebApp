@@ -3,18 +3,16 @@ package edu.elka.peakadvisor.calculator;
 import java.util.ArrayList;
 import java.util.List;
 
-import jnr.ffi.annotations.In;
 import org.springframework.stereotype.Component;
-import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMOreg;
 import weka.classifiers.functions.supportVector.Kernel;
-import weka.classifiers.functions.supportVector.PolyKernel;
+import weka.classifiers.functions.supportVector.RegOptimizer;
+import weka.classifiers.functions.supportVector.RegSMOImproved;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.classifiers.functions.LinearRegression;
-import edu.elka.peakadvisor.calculator.Rate;
 
 /**
  * Created by apiotro on 27.04.17.
@@ -35,10 +33,13 @@ public class Calculator {
             model.buildClassifier(data);
 
             int i = 0;
+            double predictedPrice = 0.0;
             for (long timestamp = begin; timestamp <= end; timestamp += 900, ++i) {
                 addRateToInstances(new Rate(timestamp, 0.0), data);
                 Instance predictedRate = data.get(rates.size() + i);
-                predictedRates.add(new Rate(timestamp, model.classifyInstance(predictedRate)));
+
+                predictedPrice = formatPrice(model.classifyInstance(predictedRate));
+                predictedRates.add(new Rate(timestamp, predictedPrice));
             }
 
         } catch (Exception ex) {
@@ -53,21 +54,37 @@ public class Calculator {
             Instances data = createRegressionModel(rates);
 
             SMOreg predictor = new SMOreg();
-            String[] options = {
+            String[] polyOptions = {
                     "-E", Integer.toString(power),
+                    "-C", "250007"
             };
+            String[] smoOptions = {
+                    "-T", "0.00001",
+                    "-V 2 -P", "1.0E-12",
+                    "-L", "0.00001",
+                    "-W", "1",
+                    "-E", Integer.toString(power)
+            };
+
             Kernel polyKernel = predictor.getKernel();
-            polyKernel.setOptions(options);
+            polyKernel.setOptions(polyOptions);
+
+            RegOptimizer smo = new RegSMOImproved();
+            smo.setSMOReg(predictor);
+            smo.setOptions(smoOptions);
 
             predictor.setKernel(polyKernel);
+            predictor.setRegOptimizer(smo);
+
             predictor.buildClassifier(data);
 
             int i = 0;
-            Double predictedPrice = 0.0;
+            double predictedPrice = 0.0;
             for (long timestamp = begin; timestamp <= end; timestamp += 900, ++i) {
                 addRateToInstances(new Rate(timestamp, 0.0), data);
                 Instance predictedRate = data.get(rates.size() + i);
-                predictedPrice = predictor.classifyInstance(predictedRate);
+
+                predictedPrice = formatPrice(predictor.classifyInstance(predictedRate));
                 predictedRates.add(new Rate(timestamp, predictedPrice));
             }
 
@@ -97,6 +114,15 @@ public class Calculator {
 
         rates.stream().forEach((r)->addRateToInstances(r, data));
         return data;
+    }
+
+    private Double formatPrice (double price) {
+        if (price < 0)
+            price = 0.0;
+        if (price > (10^10))
+            price = 10^10;
+
+        return price;
     }
 
 }
