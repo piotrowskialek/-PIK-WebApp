@@ -9,87 +9,22 @@ export default class ChartComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        // this.data = {
-        //     "currency": "USD",
-        //     "times": {
-        //         "0": "3.0",
-        //         "3600": "4.0",
-        //         "7200": "5.0",
-        //         "10800": "6.0",
-        //         "14400": "7.0",
-        //         "18000": "23.0",
-        //         "21600": "9.0",
-        //         "25200": "230.0",
-        //         "28800": "11.0",
-        //         "32400": "12.0",
-        //         "36000": "233.0",
-        //         "39600": "14.0",
-        //         "43200": "715.0",
-        //         "46800": "16.0",
-        //         "50400": "17.0",
-        //         "54000": "18.0",
-        //         "57600": "19.0",
-        //         "61200": "20.0",
-        //         "64800": "21.0",
-        //         "68400": "22.0"
-        //     }
-        // }
-
-
-        this.state = {
-            currency: [],
-            times: [],
-            values: []
-        };
-
-
-        // this.updateData = this.updateData.bind(this);
-        this.renderChart = this.renderChart.bind(this);
-        this.download = this.download.bind(this);
-        this.times = [];
-        this.values = [];
-        // this.timestamps = [];
-        // this.getValues();
-
-    }
-
-    // getValues() {
-    //     this.currency = this.data['currency'];
-    //     for (var key in this.data['times']) {
-    //         // console.log(key)
-    //         this.timestamps.push(key);
-    //         this.values.push(this.data['times'][key]);
-    //     }
-    // }
-
-
-    // updateData(){
-    //     let times = this.state.times;
-    //     console.log(times);
-    //     console.log(this.state.values);
-    //     console.log(this.state.currency);
-    //     // this.values = this.state.values;
-    //     this.currency = this.state.currency;
-    //     // this.timestamps = this.state.times;
-    // }
-
-    renderChart() {
         this.data = {
-            "currency": "ZWL",
+            "currency": "USD",
             "times": {
                 "0": "3.0",
                 "3600": "4.0",
                 "7200": "5.0",
                 "10800": "6.0",
                 "14400": "7.0",
-                "18000": "8.0",
+                "18000": "23.0",
                 "21600": "9.0",
-                "25200": "10.0",
+                "25200": "230.0",
                 "28800": "11.0",
                 "32400": "12.0",
-                "36000": "13.0",
+                "36000": "233.0",
                 "39600": "14.0",
-                "43200": "15.0",
+                "43200": "715.0",
                 "46800": "16.0",
                 "50400": "17.0",
                 "54000": "18.0",
@@ -100,41 +35,6 @@ export default class ChartComponent extends React.Component {
             }
         }
 
-
-        this.state = {
-            currency: [],
-            times: [],
-            values: []
-        };
-
-
-        this.updateData = this.updateData.bind(this);
-        this.renderChart = this.renderChart.bind(this);
-
-        this.values = [];
-        this.timestamps = [];
-        this.getValues();
-
-    }
-
-    getValues() {
-        this.currency = this.data['currency'];
-        for (var key in this.data['times']) {
-            // console.log(key)
-            this.timestamps.push(key);
-            this.values.push(this.data['times'][key]);
-        }
-    }
-
-
-    updateData() {
-        let times = this.state.times;
-        console.log(times);
-        console.log(this.state.values);
-        console.log(this.state.currency);
-        // this.values = this.state.values;
-        this.currency = this.state.currency;
-        // this.timestamps = this.state.times;
     }
 
     renderChart() {
@@ -206,109 +106,15 @@ export default class ChartComponent extends React.Component {
     }
 
 
-    componentDidMount() {
-        var rest, mime, client;
-
-        rest = require('rest'),
-            mime = require('rest/interceptor/mime');
-
-        client = rest.wrap(mime);
-        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=USD&start=0&end=68400'}).then(response => {
-            console.log(response);
-            // var a = JSON.parse(response['entity']);
-
-
-            // this.setState({currency : a['currency']});
-            // for (let key in a['times']){
-            //    console.log(key)
-            // }
-
-        });
-        // this.updateData();
-        // console.log(this.state.currency);
-        // console.log(this.currency);
-
-
-    }
-
-    download() {
-        var rest, mime, client;
-        this.times = [];
-        this.values = [];
-        rest = require('rest'),
-            mime = require('rest/interceptor/mime');
-
-        console.log(this.props)
-        let start = this.props.startDate;
-        let end = this.props.endDate;
-        let cur = this.props.currency;
-
-        start = 0;
-        end = 68000;
-        cur = "ZWL";
-
-        var a;
-        client = rest.wrap(mime);
-        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + cur + '&start=' + start + '&end=' + end}).then(response => {
-                console.log(response);
-                a = JSON.parse(response['entity']);
-            }
-        );
-
-        for (let key in a['times']) {
-            console.log(key);
-            console.log(a['times'][key]);
-
-            this.times.push(key)
-            this.values.push(a['times'][key]);
-        }
-    }
-
     componentWillReceiveProps() {
-        setTimeout(() => {
-            this.download()
-        }, 1000);
+        console.log("will receive props", this.props.currency)
     }
 
-
-    handleChange(e) {
-        const currency = e.target.value;
-        this.setState({currency})
-    }
-
-
-    componentWillReceiveProps() {
-        var rest, mime, client;
-
-        rest = require('rest'),
-            mime = require('rest/interceptor/mime');
-
-        let start = this.props.startDate;
-        let end = this.props.endDate;
-        client = rest.wrap(mime);
-        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=' + start + '&end=' + end}).then(response => {
-            console.log(response);
-            // var a = JSON.parse(response['entity']);
-            //
-            //
-            // this.setState({currency : a['currency']});
-            // for (let key in a['times']){
-            //     console.log(key)
-            // }
-
-        });
-        this.renderChart();
-    }
-
-
-    handleChange(e) {
-        const currency = e.target.value;
-        this.setState({currency})
-    }
 
     render() {
         return (
             <div>
+                Waluta w charcie: {this.props.currency}
                 <canvas ref={'chart'} height={'400'} width={'600'}/>
             </div>
 
