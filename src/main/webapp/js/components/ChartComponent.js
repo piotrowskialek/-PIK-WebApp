@@ -5,8 +5,6 @@ import Chart from 'chart.js';
 import React from 'react';
 
 
-
-
 export default class ChartComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -103,9 +101,11 @@ export default class ChartComponent extends React.Component {
         }
 
 
-        this.state = {currency : [],
-                        times: [],
-        values : []};
+        this.state = {
+            currency: [],
+            times: [],
+            values: []
+        };
 
 
         this.updateData = this.updateData.bind(this);
@@ -127,7 +127,7 @@ export default class ChartComponent extends React.Component {
     }
 
 
-    updateData(){
+    updateData() {
         let times = this.state.times;
         console.log(times);
         console.log(this.state.values);
@@ -137,7 +137,7 @@ export default class ChartComponent extends React.Component {
         // this.timestamps = this.state.times;
     }
 
-    renderChart(){
+    renderChart() {
         let chartCanvas = this.refs.chart;
 
 
@@ -247,29 +247,21 @@ export default class ChartComponent extends React.Component {
         end = 68000;
         cur = "ZWL";
 
-
+        var a;
         client = rest.wrap(mime);
         client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + cur + '&start=' + start + '&end=' + end}).then(response => {
                 console.log(response);
-                var a = JSON.parse(response['entity']);
-                // this.setState({currency : a['currency']});
-                for (let key in a['times']) {
-                    console.log(key);
-                    console.log(a['times'][key]);
-
-                    this.times.push(key)
-                    this.values.push(a['times'][key]);
-                }
-
+                a = JSON.parse(response['entity']);
             }
-        )
+        );
 
-        setTimeout(() => {
-            console.log("Times:" + this.times);
-            console.log("Values" + this.values);
-            this.renderChart();
-            },500);
+        for (let key in a['times']) {
+            console.log(key);
+            console.log(a['times'][key]);
 
+            this.times.push(key)
+            this.values.push(a['times'][key]);
+        }
     }
 
     componentWillReceiveProps() {
@@ -285,7 +277,7 @@ export default class ChartComponent extends React.Component {
     }
 
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         var rest, mime, client;
 
         rest = require('rest'),
@@ -294,7 +286,7 @@ export default class ChartComponent extends React.Component {
         let start = this.props.startDate;
         let end = this.props.endDate;
         client = rest.wrap(mime);
-        client({ path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=' + start + '&end=' + end}).then(response => {
+        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=ZWL&start=' + start + '&end=' + end}).then(response => {
             console.log(response);
             // var a = JSON.parse(response['entity']);
             //
@@ -309,9 +301,9 @@ export default class ChartComponent extends React.Component {
     }
 
 
-    handleChange(e){
-       const currency = e.target.value;
-       this.setState({currency})
+    handleChange(e) {
+        const currency = e.target.value;
+        this.setState({currency})
     }
 
     render() {

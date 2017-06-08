@@ -10,35 +10,36 @@ import Input from "./Input";
 export default class Layout extends React.Component {
     constructor() {
         super();
-        this.state ={title : "Peak Advisor"}
+        this.state = {title: "Peak Advisor"}
     }
 
 
-    changeTitle(){
+    changeTitle() {
         console.log("CHanging title")
-        this.setState({title : "PeaknieAdbisor"})
+        this.setState({title: "PeaknieAdbisor"})
     }
 
-    downloadData(currency, start, end){
+    downloadData(currency, start, end) {
         var rest, mime, client;
         rest = require('rest'),
             mime = require('rest/interceptor/mime');
         console.log(currency, start, end)
 
+        var a;
         client = rest.wrap(mime);
         client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + currency + '&start=' + start + '&end=' + end}).then(response => {
                 console.log(response);
-                var a = JSON.parse(response['entity']);
-                this.setState({currency : a['currency']});
-                // for (let key in a['times']) {
-                //     console.log(key);
-                //     console.log(a['times'][key]);
-                //
-                // }
-
+                a = JSON.parse(response['entity']);
             }
         )
+        console.log("waluta", a['currency'])
+        for (let key in a['history']) {
+            console.log(key);
+            console.log(a['history'][key]);
+
+        }
     }
+
     render() {
         return (
             <div>

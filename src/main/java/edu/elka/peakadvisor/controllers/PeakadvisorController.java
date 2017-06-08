@@ -80,7 +80,7 @@ public class PeakadvisorController {
             return returner+"} }";
         }
         long current = System.currentTimeMillis() / 1000;
-
+        current = 14400;
         //zaokraglanie do najblizszej wielokrotnosci 3600
         {
             long modulo_current = current % 3600;
