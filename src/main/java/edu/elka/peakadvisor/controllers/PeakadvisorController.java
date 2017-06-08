@@ -6,17 +6,14 @@ import edu.elka.peakadvisor.collector.CollectingClient;
 import edu.elka.peakadvisor.collector.YahooClient;
 import edu.elka.peakadvisor.model.CassandraDao;
 import edu.elka.peakadvisor.model.Latest;
-import edu.elka.peakadvisor.model.Rates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -152,7 +149,7 @@ public class PeakadvisorController {
 
 
         CollectingClient yahooClient = new YahooClient();
-        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
+        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=f181f6f8185d40cb88f226efa37a3291");
 
         /*
         DO USUNIECIA W PRODUKCJi - tu konieczne aby timestamp byl
