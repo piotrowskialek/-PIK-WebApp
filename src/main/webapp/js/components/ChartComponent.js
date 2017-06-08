@@ -3,7 +3,7 @@
  */
 import Chart from 'chart.js';
 import React from 'react';
-var LineChart = require("react-chartjs").Line;
+import moment from 'moment';
 
 export default class ChartComponent extends React.Component {
     constructor(props) {
@@ -37,135 +37,140 @@ export default class ChartComponent extends React.Component {
 
         this.dataa = [];
         this.times = [];
+        this.predTimes = [];
+        this.predData = [];
         this.currency = "";
-        // this.getValues =this.getValues.bind(this);
-        // this.timestamps = [];
-        // this.values = [];
-        // this.currency = ""
+
     }
 
-    // getValues() {
-    //     this.currency = this.data['currency'];
-    //     for (var key in this.data['times']) {
-    //         console.log(key)
-    // this.timestamps.push(key);
-    // this.values.push(this.data['times'][key]);
+    // componentDidMount() {
+    //     // this.getValues();
+    //     //     this.setState({chartData :  {
+    //     //
+    //     //         labels: [new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString(),
+    //     //             new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString()],
+    //     //         // labels: this.times,
+    //     //         // labels: this.timestamps,
+    //     //         datasets: [{
+    //     //             label: this.currency,
+    //     //             data: [12, 20, 3, 5, 3, 4, 5, 6],
+    //     //             // data: this.values,
+    //     //             fill: false,
+    //     //             backgroundColor: [
+    //     //                 'rgba(255, 99, 132, 0.2)',
+    //     //                 'rgba(54, 162, 235, 0.2)',
+    //     //                 'rgba(255, 206, 86, 0.2)',
+    //     //                 'rgba(75, 192, 192, 0.2)',
+    //     //                 'rgba(153, 102, 255, 0.2)',
+    //     //                 'rgba(255, 159, 64, 0.2)'
+    //     //             ],
+    //     //             borderColor: [
+    //     //                 'rgba(255,99,132,1)',
+    //     //                 'rgba(54, 162, 235, 1)',
+    //     //                 'rgba(255, 206, 86, 1)',
+    //     //                 'rgba(75, 192, 192, 1)',
+    //     //                 'rgba(153, 102, 255, 1)',
+    //     //                 'rgba(255, 159, 64, 1)'
+    //     //             ],
+    //     //             borderWidth: 3
+    //     //         }]
+    //     //     },
+    //     //         options: {}})
+    //     // }//
+    //
+    //     let chartCanvas = this.refs.chart;
+    //     console.log({cur: this.currency, dat: this.values, t: this.timestamps})
+    //
+    //     let myChart = new Chart(chartCanvas, {
+    //             type: 'line',
+    //             data: {
+    //
+    //                 labels: [new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString(),
+    //                     new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString()],
+    //                 // labels: this.times,
+    //                 // labels: this.timestamps,
+    //                 datasets: [{
+    //                     label: this.currency,
+    //                     data: [12, 20, 3, 5, 3, 4, 5, 6],
+    //                     // data: this.values,
+    //                     fill: false,
+    //                     backgroundColor: [
+    //                         'rgba(255, 99, 132, 0.2)',
+    //                         'rgba(54, 162, 235, 0.2)',
+    //                         'rgba(255, 206, 86, 0.2)',
+    //                         'rgba(75, 192, 192, 0.2)',
+    //                         'rgba(153, 102, 255, 0.2)',
+    //                         'rgba(255, 159, 64, 0.2)'
+    //                     ],
+    //                     borderColor: [
+    //                         'rgba(255,99,132,1)',
+    //                         'rgba(54, 162, 235, 1)',
+    //                         'rgba(255, 206, 86, 1)',
+    //                         'rgba(75, 192, 192, 1)',
+    //                         'rgba(153, 102, 255, 1)',
+    //                         'rgba(255, 159, 64, 1)'
+    //                     ],
+    //                     borderWidth: 3
+    //                 }]
+    //             }
+    //         }
+    //         // {
+    //         //     label: "USD",
+    //         //     data: [5, 2, 4, 12, 4, 2, 1, 12],
+    //         //     fill: false,
+    //         //     backgroundColor: [
+    //         //         'rgba(255, 99, 132, 0.2)',
+    //         //         'rgba(54, 162, 235, 0.2)',
+    //         //         'rgba(255, 206, 86, 0.2)',
+    //         //         'rgba(75, 192, 192, 0.2)',
+    //         //         'rgba(153, 102, 255, 0.2)',
+    //         //         'rgba(255, 159, 64, 0.2)'
+    //         //     ],
+    //         //     borderColor: [
+    //         //         // 'rgba(255,99,132,1)',
+    //         //         // 'rgba(54, 162, 235, 1)',
+    //         //         'rgba(255, 206, 86, 1)',
+    //         //         'rgba(75, 192, 192, 1)',
+    //         //         'rgba(153, 102, 255, 1)',
+    //         //         'rgba(255, 159, 64, 1)'
+    //         //     ],
+    //         //     borderWidth: 3
+    //         // }]
+    //
+    //     );
+    //
+    //     this.setState({chart: myChart});
     // }
-    // }
 
-    componentDidMount() {
-        // this.getValues();
-        //     this.setState({chartData :  {
-        //
-        //         labels: [new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString(),
-        //             new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString()],
-        //         // labels: this.times,
-        //         // labels: this.timestamps,
-        //         datasets: [{
-        //             label: this.currency,
-        //             data: [12, 20, 3, 5, 3, 4, 5, 6],
-        //             // data: this.values,
-        //             fill: false,
-        //             backgroundColor: [
-        //                 'rgba(255, 99, 132, 0.2)',
-        //                 'rgba(54, 162, 235, 0.2)',
-        //                 'rgba(255, 206, 86, 0.2)',
-        //                 'rgba(75, 192, 192, 0.2)',
-        //                 'rgba(153, 102, 255, 0.2)',
-        //                 'rgba(255, 159, 64, 0.2)'
-        //             ],
-        //             borderColor: [
-        //                 'rgba(255,99,132,1)',
-        //                 'rgba(54, 162, 235, 1)',
-        //                 'rgba(255, 206, 86, 1)',
-        //                 'rgba(75, 192, 192, 1)',
-        //                 'rgba(153, 102, 255, 1)',
-        //                 'rgba(255, 159, 64, 1)'
-        //             ],
-        //             borderWidth: 3
-        //         }]
-        //     },
-        //         options: {}})
-        // }//
-
-        let chartCanvas = this.refs.chart;
-        console.log({cur: this.currency, dat: this.values, t: this.timestamps})
-
-        let myChart = new Chart(chartCanvas, {
-                type: 'line',
-                data: {
-
-                    labels: [new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString(),
-                        new Date(86400000).toDateString(), new Date(86400030).toDateString(), new Date(86400020).toDateString(), new Date(86400040).toDateString()],
-                    // labels: this.times,
-                    // labels: this.timestamps,
-                    datasets: [{
-                        label: this.currency,
-                        data: [12, 20, 3, 5, 3, 4, 5, 6],
-                        // data: this.values,
-                        fill: false,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 3
-                    }]
-                }
-            }
-            // {
-            //     label: "USD",
-            //     data: [5, 2, 4, 12, 4, 2, 1, 12],
-            //     fill: false,
-            //     backgroundColor: [
-            //         'rgba(255, 99, 132, 0.2)',
-            //         'rgba(54, 162, 235, 0.2)',
-            //         'rgba(255, 206, 86, 0.2)',
-            //         'rgba(75, 192, 192, 0.2)',
-            //         'rgba(153, 102, 255, 0.2)',
-            //         'rgba(255, 159, 64, 0.2)'
-            //     ],
-            //     borderColor: [
-            //         // 'rgba(255,99,132,1)',
-            //         // 'rgba(54, 162, 235, 1)',
-            //         'rgba(255, 206, 86, 1)',
-            //         'rgba(75, 192, 192, 1)',
-            //         'rgba(153, 102, 255, 1)',
-            //         'rgba(255, 159, 64, 1)'
-            //     ],
-            //     borderWidth: 3
-            // }]
-
-        );
-
-        this.setState({chart: myChart});
-    }
-
-
+    
     componentDidUpdate() {
-        console.log("Updated")
-        console.log((this.props))
+        function formatTime(timestamp){
+            return moment.unix(timestamp).format("YYYY:M:D H:m:s")
+        }
+        
+
+        console.log((this.props));
         if (this.dataa === this.props.data && this.times === this.props.times && this.currency === this.props.currency && this.predData === this.props.predData && this.predTimes === this.props.predTimes) {
-            console.log("poczatek")
             return
         }
-        console.log("fasfs")
         this.dataa = this.props.data;
         this.times = this.props.times;
         this.currency = this.props.currency;
         this.predData = this.props.predData;
         this.predTimes = this.props.predTimes;
+
+        if(typeof this.dataa !== 'undefined'){
+            console.log("Data undefined")
+        }
+        if(typeof this.times !== 'undefined'){
+            console.log("times undefined")
+        }
+        if(typeof this.predData !== 'undefined'){
+            console.log("preddata undefined")
+        }
+        if(typeof this.predTimes !== 'undefined'){
+            console.log("predtimes undefined")
+        }
 
         if (typeof this.dataa !== 'undefined' && typeof this.times !== 'undefined' && typeof this.currency !== 'undefined' && typeof this.predData !== 'undefined' && typeof this.predData !== 'undefined') {
             console.log("will did props", {
@@ -176,26 +181,23 @@ export default class ChartComponent extends React.Component {
                 predData: this.predData
             });
 
-            var labels = this.times;
-            labels = labels.concat(this.predTimes)
+            let labels = this.times.concat(this.predTimes).map(formatTime);
 
-            var predV = []
-            for (var a in this.times){
-                predV.push("")
-                // console.log(this.times[a])
-                // b.push(new Date(this.times[a]));
-            }
-            predV = predV.concat(this.predData);
-            console.log({p: predV})
-            var xx = []
-            for (var a in this.predTimes){
-                xx.push("")
-                // console.log(this.times[a])
-                // b.push(new Date(this.times[a]));
+            let datHist = []
+            for(var i=0; i < this.times.length; i++){
+                datHist.push({x : formatTime(this.times[i]), y: this.dataa[i]})
             }
 
-            var datV = this.dataa.concat(xx);
+            console.log({datH : this.times});
+            console.log({datHist: datHist});
 
+            let datPred = [];
+            for(var i=0; i < this.predTimes.length; i++){
+                datPred.push({x : formatTime(this.predTimes[i]), y: this.predData[i]})
+            }
+            console.log({datH : this.predTimes});
+            console.log({datPred : datPred});
+            console.log({labels : labels});
             let chartCanvas = this.refs.chart;
             let myChart = new Chart(chartCanvas, {
                 type: 'line',
@@ -203,43 +205,33 @@ export default class ChartComponent extends React.Component {
                     labels: labels,
                     datasets: [{
                         label: this.currency,
-                        data: datV,
-                        fill: false,
+                        data: datHist,
+                        fill: true,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
+                            'rgba(215, 78, 66, 0.4)',
+
                         ],
                         borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
+                            'rgba(215, 78, 66, 0.9)'
                         ],
                         borderWidth: 3
                     },
                         {
-                            label: this.currency + " Predicted",
-                            data: predV,
-                            fill: false,
+                            label: this.currency  + "Predicted",
+                            data: datPred,
+                            fill: true,
                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 12, 235, 0.2)',
-                                'rgba(255, 42, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)'
+                                'rgba(215, 158, 44, 0.4)'
                             ],
                             borderColor: [
-                                'rgba(23,99,132,1)',
-                                'rgba(54, 2, 235, 1)',
-                                'rgba(255, 1, 86, 1)',
+                                'rgba(215, 158, 44, 0.9)'
                             ],
                             borderWidth: 3
                         }]
+                },
+                options : {
+                    responsive: true,
+                    maintainAspectRatio: false
                 }
             });
 
@@ -255,7 +247,7 @@ export default class ChartComponent extends React.Component {
                 {/*<LineChart data={this.state.chartData} options={this.state.options} width="600" height="250"/>*/}
 
                 <div>
-                    <canvas ref={'chart'} height={'400'} width={'600'}/>
+                    <canvas ref={'chart'} height={'400'} width={'700'}/>
                 </div>
             </div>
         )
