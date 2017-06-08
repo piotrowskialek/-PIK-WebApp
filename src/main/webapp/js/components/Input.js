@@ -2,12 +2,9 @@
  * Created by bartek on 02.06.17.
  */
 import React from 'react';
-import Calendar from './Calendar'
+// import Calendar from './Calendar'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-
-// import 'react-datepicker/dist/react-datepicker.css';
-
 
 export default class Input extends React.Component {
 
@@ -17,17 +14,20 @@ export default class Input extends React.Component {
             currency: "",
             start: "",
             end: "",
-            startDate: moment()
+            startDate: moment().unix()
         };
     }
 
     _handleDateSelect(date) {
         this.setState({
-            startDate: date
+            startDate: moment(date).unix()
         });
     }
-    _handleDateChange(date) {
 
+    _handleDateChange(date) {
+        this.setState({
+            startDate: moment(date).unix()
+        });
         console.log({Date : date })
     }
 
@@ -59,12 +59,8 @@ export default class Input extends React.Component {
     render() {
         return (
             <div>
-                <DatePicker
-                    selected={this.state.startDate}
-                    onSelect={this._handleDateSelect.bind(this)}
-                    onChange={this._handleDateChange.bind(this)}
-                />
                 <div>
+                    {this.state.startDate}
                     <form onSubmit={this._handleForm.bind(this)}>
                         <label for="sel1">Currency:</label>
                         <select value={this.state.currency} onChange={this._handleChangeCur.bind(this)}
@@ -249,7 +245,9 @@ export default class Input extends React.Component {
                         </select>
                         <label>
                             Start
-                            <input value={this.state.start} onChange={this._handleChangeStart.bind(this)}/>
+                            <DatePicker selected={this.state.startDate} onSelect={this._handleDateSelect.bind(this)} onChange={this._handleDateChange.bind(this)}/>
+
+                            {/*<input value={this.state.start} onChange={this._handleChangeStart.bind(this)}/>*/}
                         </label>
                         <label>
                             End
