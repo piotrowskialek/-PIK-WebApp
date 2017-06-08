@@ -20,7 +20,7 @@ class CalculatorTest {
         testRates.add(new Rate (1234, 5.6));
         testRates.add(new Rate (3456, 5.6));
         List<Rate> result = calculator.predictRatesLinear(testRates, 4000, 7603);
-        assertEquals(true, (5.58 < result.get(0).getPrice()) && (result.get(0).getPrice() < 5.62));
+        assertEquals(true, (0.0 <= result.get(0).getPrice()) && (result.get(0).getPrice() <= 12.9));
     }
 
     @Test
@@ -29,7 +29,7 @@ class CalculatorTest {
         testRates.add(new Rate (0, 10));
         testRates.add(new Rate (3600, 20));
         List<Rate> result = calculator.predictRatesLinear(testRates, 3600, 7200);
-        assertEquals(true, (14.9 < result.get(2).getPrice()) && (result.get(2).getPrice() < 15.1));
+        assertEquals(true, (0.0 <= result.get(2).getPrice()) && (result.get(2).getPrice() < 15.1));
     }
 
     @Test
