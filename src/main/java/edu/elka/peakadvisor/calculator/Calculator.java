@@ -43,12 +43,10 @@ public class Calculator {
         return predictedRates;
     }
 
-    public List<Rate> predictRatesPolynomial (ArrayList<Rate> rates, long begin, long end, int power) {
+    public List<Rate> predictRatesPolynomial (List<Rate> rates, long begin, long end, int power) {
         List<Rate> predictedRates = new ArrayList<>();
         try {
             Instances data = createRegressionModel(rates);
-
-            rates.stream().forEach((r)->addRateToInstances(r, data));
 
             SMOreg predictor = new SMOreg();
             String [] options = {"-C", "1.0",
