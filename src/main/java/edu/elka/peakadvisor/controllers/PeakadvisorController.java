@@ -105,10 +105,7 @@ public class PeakadvisorController {
             }
         }
 
-        current = 14400;
-
-
-       /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
+        /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
         {
             int minTimestamp = getMinTimestampFromDB();
             int maxTimestamp = getMaxTimestampFromDB();
