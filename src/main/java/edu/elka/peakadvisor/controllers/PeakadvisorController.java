@@ -6,11 +6,14 @@ import edu.elka.peakadvisor.collector.CollectingClient;
 import edu.elka.peakadvisor.collector.YahooClient;
 import edu.elka.peakadvisor.model.CassandraDao;
 import edu.elka.peakadvisor.model.Latest;
+import jnr.ffi.annotations.In;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,7 +67,7 @@ public class PeakadvisorController {
         return "Scheduler started with step="+step.toString()+" sec.";
     }
 
-    @RequestMapping("/getValue")
+    @RequestMapping(value = "/getValue", method = RequestMethod.POST)
     public String getValue(
             @RequestParam(value="currency", defaultValue="USD") String cur,
             @RequestParam(value="start", defaultValue="0") Integer start,
