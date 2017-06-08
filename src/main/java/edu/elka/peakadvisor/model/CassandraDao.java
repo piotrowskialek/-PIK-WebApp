@@ -89,11 +89,12 @@ public class CassandraDao {
         selectStatement.where(QueryBuilder.lte("timestamp",timestampEnd));
         List<Latest> queryResult = template.select(selectStatement,Latest.class);
 
-        List<Double> result = queryResult.stream().map((l)->{
+
+        List<Number> result = queryResult.stream().map((l) -> {
             try {
 
-                return (Double) l.getRates().getClass()
-                        .getMethod("get"+name.toUpperCase()).invoke(l.getRates());
+                return (Number) ((l.getRates().getClass()
+                        .getMethod("get" + name.toUpperCase()).invoke(l.getRates())));
 
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -105,7 +106,10 @@ public class CassandraDao {
             return null;
         }).collect(Collectors.toList());
 
-        return result;
+
+        List<Double> result2 = result.stream().map(d -> d.doubleValue()).collect(Collectors.toList());
+
+        return result2;
     }
 
     public CassandraClusterFactoryBean getCluster() {
