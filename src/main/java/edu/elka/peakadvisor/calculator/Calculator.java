@@ -1,9 +1,6 @@
 package edu.elka.peakadvisor.calculator;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -86,7 +83,7 @@ public class Calculator {
         if (rates.size() < 2)
             return null;
 
-        ArrayList<Attribute> attributes = new ArrayList<Attribute>(2);
+        ArrayList<Attribute> attributes = new ArrayList<>(2);
         attributes.add (new Attribute("timestamp"));
         attributes.add(new Attribute("price"));
 
