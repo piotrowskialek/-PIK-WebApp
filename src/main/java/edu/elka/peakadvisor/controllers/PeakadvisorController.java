@@ -13,7 +13,6 @@ import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -104,8 +103,6 @@ public class PeakadvisorController {
                 current = current + 3600 - modulo_current;
             }
         }
-
-        current = 10800;
 
         /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
         {
