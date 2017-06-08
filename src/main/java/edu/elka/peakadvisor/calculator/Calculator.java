@@ -1,6 +1,9 @@
 package edu.elka.peakadvisor.calculator;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -57,10 +60,13 @@ public class Calculator {
             predictor.buildClassifier(data);
 
             int i = 0;
+            Double predictedPrice = 0.0;
             for (long timestamp = begin; timestamp <= end; timestamp += 900, ++i) {
                 addRateToInstances(new Rate(timestamp, 0.0), data);
                 Instance predictedRate = data.get(rates.size() + i);
-                predictedRates.add(new Rate(timestamp, predictor.classifyInstance(predictedRate)));
+                predictedPrice = predictor.classifyInstance(predictedRate);
+                predictedPrice = (double)Math.round(predictedPrice * 100000d / 100000d);
+                predictedRates.add(new Rate(timestamp, predictedPrice));
             }
 
         } catch (Exception ex) {
