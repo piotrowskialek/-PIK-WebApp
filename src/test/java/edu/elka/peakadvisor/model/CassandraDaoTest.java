@@ -58,6 +58,8 @@ public class CassandraDaoTest {
 
     @Test
     void readOne() {
+        if (cassandraDao == null)
+            System.out.println("Test");
     }
 
     @Test
