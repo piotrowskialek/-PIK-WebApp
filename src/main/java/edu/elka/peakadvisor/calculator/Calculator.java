@@ -3,8 +3,12 @@ package edu.elka.peakadvisor.calculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import jnr.ffi.annotations.In;
 import org.springframework.stereotype.Component;
+import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMOreg;
+import weka.classifiers.functions.supportVector.Kernel;
+import weka.classifiers.functions.supportVector.PolyKernel;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -49,11 +53,13 @@ public class Calculator {
             Instances data = createRegressionModel(rates);
 
             SMOreg predictor = new SMOreg();
-            String [] options = {"-C", "1.0",
-                                "-N", "0",
-                                "-I", "weka.classifiers.functions.supportVector.RegSMOImproved -T 0.001 -V -P 1.0E-12 -L 0.001 -W 1",
-                                "-K", "weka.classifiers.functions.supportVector.PolyKernel -E " + power + " -C 250007"};
-            predictor.setOptions(options);
+            String[] options = {
+                    "-E", Integer.toString(power),
+            };
+            Kernel polyKernel = predictor.getKernel();
+            polyKernel.setOptions(options);
+
+            predictor.setKernel(polyKernel);
             predictor.buildClassifier(data);
 
             int i = 0;
@@ -62,7 +68,6 @@ public class Calculator {
                 addRateToInstances(new Rate(timestamp, 0.0), data);
                 Instance predictedRate = data.get(rates.size() + i);
                 predictedPrice = predictor.classifyInstance(predictedRate);
-                predictedPrice = (double)Math.round(predictedPrice * 100000d / 100000d);
                 predictedRates.add(new Rate(timestamp, predictedPrice));
             }
 

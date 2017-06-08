@@ -105,6 +105,8 @@ public class PeakadvisorController {
             }
         }
 
+        current = 10800;
+
         /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
         {
             int minTimestamp = getMinTimestampFromDB();
@@ -116,7 +118,7 @@ public class PeakadvisorController {
         try {
             List<Double> prices = dao.getPricesWithTimestampRange(cur, start, (int) current);
 
-            ArrayList<Rate> rates = new ArrayList<>();
+            List<Rate> rates = new ArrayList<>();
             int i = 0;
             for (int timestamp = start; i < prices.size(); timestamp += 3600, ++i) {
                 rates.add(new Rate(timestamp, prices.get(i)));
