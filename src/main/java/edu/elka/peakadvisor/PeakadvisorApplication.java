@@ -18,5 +18,6 @@ public class PeakadvisorApplication {
 		ApplicationContext service = new AnnotationConfigApplicationContext(CassandraConfig.class);
 
 		SpringApplication.run(PeakadvisorApplication.class, args);
+
 	}
 }

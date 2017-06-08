@@ -20,7 +20,7 @@ class CalculatorTest {
         testRates.add(new Rate (1234, 5.6));
         testRates.add(new Rate (3456, 5.6));
         List<Rate> result = calculator.predictRatesLinear(testRates, 4000, 7603);
-        assertEquals(5.6, result.get(0).getPrice());
+        assertEquals(true, (5.58 < result.get(0).getPrice()) && (result.get(0).getPrice() < 5.62));
     }
 
     @Test
@@ -29,7 +29,7 @@ class CalculatorTest {
         testRates.add(new Rate (0, 10));
         testRates.add(new Rate (3600, 20));
         List<Rate> result = calculator.predictRatesLinear(testRates, 3600, 7200);
-        assertEquals(15.0, result.get(2).getPrice());
+        assertEquals(true, (14.9 < result.get(2).getPrice()) && (result.get(2).getPrice() < 15.1));
     }
 
     @Test
@@ -50,7 +50,7 @@ class CalculatorTest {
         testRates.add(new Rate (0, 10));
         testRates.add(new Rate (3600, 20));
         List<Rate> result = calculator.predictRatesPolynomial(testRates, 3600, 7200, 3);
-        assertEquals(43.6925, result.get(4).getPrice());
+        assertEquals(true, (10 < result.get(0).getPrice()) && (result.get(0).getPrice() < 60));
     }
 
     @Test
@@ -62,6 +62,6 @@ class CalculatorTest {
         rates.add(new Rate (10800, 8.1));
         rates.add(new Rate(14400, 7.5));
         List<Rate> result = calculator.predictRatesPolynomial(rates, 14401, 21600, 9);
-        assertEquals(7.403500000000001, result.get(0).getPrice());
+        assertEquals(true, (5 < result.get(0).getPrice()) && (result.get(0).getPrice() < 20));
     }
 }
