@@ -3,10 +3,11 @@
  */
 import React from "react"
 
-import Title from './Title'
-import ChartComponent from './ChartComponent'
+import Title from './Title';
+import ChartComponent from './ChartComponent';
 import Input from "./Input";
-import Chart from "./Chart";
+import Calendar from "./Calendar";
+
 export default class Layout extends React.Component {
     constructor() {
         super();
@@ -68,6 +69,7 @@ export default class Layout extends React.Component {
     render() {
         return (
             <div>
+                <Calendar/>
                 <Title title={this.state.title}/>
                 <Input changeTitle={this.changeTitle.bind(this)} downloadData={this.downloadData.bind(this)}/>
                 {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}

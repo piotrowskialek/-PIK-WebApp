@@ -3,7 +3,7 @@
      output: {
          path: __dirname + '/bin',
 
-         filename: 'bundle.js'
+         filename: 'app.bundle.js'
 
      },
      module: {
