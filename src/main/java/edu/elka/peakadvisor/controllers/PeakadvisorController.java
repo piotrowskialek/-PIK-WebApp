@@ -67,7 +67,7 @@ public class PeakadvisorController {
         return "Scheduler started with step="+step.toString()+" sec.";
     }
 
-    @RequestMapping(value = "/getValue", method = RequestMethod.POST)
+    @RequestMapping("/getValue")
     public String getValue(
             @RequestParam(value="currency", defaultValue="USD") String cur,
             @RequestParam(value="start", defaultValue="0") Integer start,
