@@ -36,46 +36,21 @@ export default class Layout extends React.Component {
                 let times = [];
                 for (let key in a['history']) {
                     times.push(key);
-                    data.push(parseFloat(a['history'][key]));
+                    data.push(a['history'][key]);
                 }
                 this.setState({times: times})
                 this.setState({data: data})
+                let predData = [];
+                let predTimes = [];
+                for (let key in a['predicted']) {
+                    predTimes.push(key);
+                    predData.push(a['predicted'][key]);
+                 }
+                this.setState({predTimes: predTimes})
+                this.setState({predData: predData})
             }
         )
 
-        // let chartCanvas = this.refs.chart;
-        //
-        //
-        // let myChart = new Chart(chartCanvas, {
-        //     type: 'line',
-        //     data: {
-        //         labels: a['history'],
-        //         // labels: this.timestamps,
-        //         datasets: [{
-        //             label: a['currency'],
-        //             data: a['history'],
-        //             fill: false,
-        //             backgroundColor: [
-        //                 'rgba(255, 99, 132, 0.2)',
-        //                 'rgba(54, 162, 235, 0.2)',
-        //                 'rgba(255, 206, 86, 0.2)',
-        //                 'rgba(75, 192, 192, 0.2)',
-        //                 'rgba(153, 102, 255, 0.2)',
-        //                 'rgba(255, 159, 64, 0.2)'
-        //             ],
-        //             borderColor: [
-        //                 'rgba(255,99,132,1)',
-        //                 'rgba(54, 162, 235, 1)',
-        //                 'rgba(255, 206, 86, 1)',
-        //                 'rgba(75, 192, 192, 1)',
-        //                 'rgba(153, 102, 255, 1)',
-        //                 'rgba(255, 159, 64, 1)'
-        //             ],
-        //             borderWidth: 3
-        //         }]
-        //     }
-        // })
-        // this.setState({chart: myChart});
     }
 
     render() {
@@ -86,7 +61,7 @@ export default class Layout extends React.Component {
                 <Input changeTitle={this.changeTitle.bind(this)} downloadData={this.downloadData.bind(this)}/>
                 {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}
                 {/*<ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>*/}
-                <ChartComponent currency={this.state.currency} data={this.state.data} times={this.state.times}/>
+                <ChartComponent currency={this.state.currency} data={this.state.data} times={this.state.times} predData={this.state.predData} predTimes={this.state.predTimes}/>
                 <div>
                     <canvas ref={'chart'} height={'400'} width={'600'}/>
                 </div>

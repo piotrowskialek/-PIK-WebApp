@@ -67,7 +67,7 @@ public class PeakadvisorController {
         return "Scheduler started with step="+step.toString()+" sec.";
     }
 
-    @RequestMapping(value = "/getValue", method = RequestMethod.POST)
+    @RequestMapping("/getValue")
     public String getValue(
             @RequestParam(value="currency", defaultValue="USD") String cur,
             @RequestParam(value="start", defaultValue="0") Integer start,
@@ -80,7 +80,6 @@ public class PeakadvisorController {
             return returner+"} }";
         }
         long current = System.currentTimeMillis() / 1000;
-        current = 14400;
         //zaokraglanie do najblizszej wielokrotnosci 3600
         {
             long modulo_current = current % 3600;
@@ -106,8 +105,10 @@ public class PeakadvisorController {
             }
         }
 
+        current = 14400;
 
-        /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
+
+       /*przydalaby sie metoda zwracajaca minimalny i maksymalny Timestamp zapisany w bazie
         {
             int minTimestamp = getMinTimestampFromDB();
             int maxTimestamp = getMaxTimestampFromDB();
