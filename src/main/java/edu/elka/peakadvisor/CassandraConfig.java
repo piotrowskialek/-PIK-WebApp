@@ -6,7 +6,6 @@ import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.convert.CassandraConverter;
-import org.springframework.data.cassandra.convert.MappingCassandraConverter;
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.mapping.BasicCassandraMappingContext;
@@ -28,24 +27,30 @@ public class CassandraConfig {
         return cluster;
     }
 
+    xD
 
+            xD
     @Bean
     public CassandraMappingContext mappingContext() throws Exception {
         BasicCassandraMappingContext mappingContext = new BasicCassandraMappingContext();
         mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cluster().getObject(), "pierwszy"));
-
+        xD
         return mappingContext;
     }
 
     @Bean
     public CassandraConverter converter() throws Exception {
-        return new MappingCassandraConverter(mappingContext());
+        return new (mappaasaaingContext());
     }
 
-    @Bean
-    public CassandraSessionFactoryBean session() throws Exception {
+    ll
 
-        CassandraSessionFactoryBean session = new CassandraSessionFactoryBean();
+    xD
+
+    @BeanxDddd
+    public CassandraSessionFactoryBean session() throws Exception {
+        xD
+        CassandraSessionFactoryBeaxDn session = new CassandraSessionFactoryBean();
         session.setCluster(cluster().getObject());
         session.setKeyspaceName("pierwszy");
         session.setConverter(converter());
