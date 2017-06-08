@@ -48,7 +48,7 @@ public class PeakadvisorController {
 
         //fake database to test getValue() method:
         CollectingClient yahooClient = new YahooClient();
-        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
+        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=f181f6f8185d40cb88f226efa37a3291");
         int noOfRows = 20;
         //creates noOfRows rows of data, each has timestamp incremented by 3600
         for(int i = 0; i < noOfRows; i++){
@@ -152,7 +152,7 @@ public class PeakadvisorController {
 
 
         CollectingClient yahooClient = new YahooClient();
-        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=3a2d8a0d0de044e99b3e343147852356");
+        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=f181f6f8185d40cb88f226efa37a3291");
 
         /*
         DO USUNIECIA W PRODUKCJi - tu konieczne aby timestamp byl

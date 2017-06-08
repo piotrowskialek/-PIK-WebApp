@@ -23,17 +23,18 @@ export default class Layout extends React.Component {
         var rest, mime, client;
         rest = require('rest'),
             mime = require('rest/interceptor/mime');
+        console.log(currency, start, end)
 
         client = rest.wrap(mime);
-        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + cur + '&start=' + start + '&end=' + end}).then(response => {
+        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + currency + '&start=' + start + '&end=' + end}).then(response => {
                 console.log(response);
                 var a = JSON.parse(response['entity']);
-                // this.setState({currency : a['currency']});
-                for (let key in a['times']) {
-                    console.log(key);
-                    console.log(a['times'][key]);
-
-                }
+                this.setState({currency : a['currency']});
+                // for (let key in a['times']) {
+                //     console.log(key);
+                //     console.log(a['times'][key]);
+                //
+                // }
 
             }
         )
@@ -42,7 +43,7 @@ export default class Layout extends React.Component {
         return (
             <div>
                 <Title title={this.state.title}/>
-                <Input changeTitle={this.changeTitle.bind(this)}/>
+                <Input changeTitle={this.changeTitle.bind(this)} downloadData={this.downloadData.bind(this)}/>
                 {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}
                 {/*<ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>*/}
             </div>
