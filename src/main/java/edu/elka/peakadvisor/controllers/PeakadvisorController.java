@@ -42,7 +42,6 @@ public class PeakadvisorController {
 
     @RequestMapping("/")
     public String index(){
-        saveOneTest();
 
         //fake database to test getValue() method:
         CollectingClient yahooClient = new YahooClient();
@@ -62,7 +61,6 @@ public class PeakadvisorController {
     @RequestMapping("/scheduler")
     public String hello2(@RequestParam(value="step", defaultValue="3600") Integer step){
         startScheduler(step);
-        saveOneTest();
         return "Scheduler started with step="+step.toString()+" sec.";
     }
 
@@ -73,7 +71,6 @@ public class PeakadvisorController {
             @RequestParam(value="end", defaultValue="0") Integer end,
             @RequestParam(value="power", defaultValue="1") Integer power
     ){
-        saveOneTest();
         String returner="{ \"currency\":\""+cur+"\", \"history\": { ";
 
         if(start>end) {
@@ -140,7 +137,6 @@ public class PeakadvisorController {
             e.printStackTrace();
         }
 
-        saveOneTest();
         dao.getPricesWithTimestampRange("btc",100,Integer.MAX_VALUE);
         return returner;
 
@@ -148,27 +144,16 @@ public class PeakadvisorController {
 
     public void saveOneTest(){
 
-        String adres = "https://openexchangerates.org/api/historical/2017-";
-        String drugi = ".json?app_id=f181f6f8185d40cb88f226efa37a3291";
-
         CollectingClient yahooClient = new YahooClient();
-        Latest latest;
-        for (int j = 1; j < 13; ++j) {
-            String tmp2 = j < 10 ? "0" + j : j + "";
-            for (int i = 1; i < 29; ++i) {
-                String tmp = i < 10 ? "0" + i : i + "";
-                String query = adres + tmp2 + "-" + tmp + drugi;
-                latest = yahooClient.collect(query);
-                dao.saveLatest(latest);
-            }
-
-        }
+        Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=f181f6f8185d40cb88f226efa37a3291");
 
         /*
         DO USUNIECIA W PRODUKCJi - tu konieczne aby timestamp byl
         inny przy zbieraniu czestszym niz 1h
          */
+        dao.saveLatest(latest);
         System.out.println("saveOneTest() poszlo");
+
 
     }
 
