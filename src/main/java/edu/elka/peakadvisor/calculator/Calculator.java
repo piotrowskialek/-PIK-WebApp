@@ -80,7 +80,7 @@ public class Calculator {
 
             int i = 0;
             double predictedPrice = 0.0;
-            for (long timestamp = begin; timestamp <= end; timestamp += 900, ++i) {
+            for (long timestamp = begin; timestamp <= end; timestamp += 3600, ++i) {
                 addRateToInstances(new Rate(timestamp, 0.0), data);
                 Instance predictedRate = data.get(rates.size() + i);
 

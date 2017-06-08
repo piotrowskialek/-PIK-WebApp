@@ -14,21 +14,36 @@ export default class Input extends React.Component {
             currency: "",
             start: "",
             end: "",
-            startDate: moment().unix()
+
+            startDate: moment(),
+            endDate: moment()
         };
     }
 
-    _handleDateSelect(date) {
+    _handleDateStartSelect(date) {
         this.setState({
-            startDate: moment(date).unix()
+            startDate: date
         });
+        console.log("START")
+
+    }
+    _handleDateEndSelect(date) {
+        this.setState({
+            endDate: date
+        });
+        console.log("END")
     }
 
-    _handleDateChange(date) {
-        this.setState({
-            startDate: moment(date).unix()
-        });
-        console.log({Date : date })
+    _handleDateEChange(date) {
+        console.log(date)
+        console.log("chEND")
+
+    }
+
+    _handleDateSChange(date) {
+        console.log(date)
+        console.log("chSTART")
+
     }
 
     _handleChangeCur(e) {
@@ -53,14 +68,14 @@ export default class Input extends React.Component {
     _handleForm(e) {
         e.preventDefault();
         console.log("submitted")
-        this.props.downloadData(this.state.currency, this.state.start, this.state.end)
+        this.props.downloadData(this.state.currency, this.state.startDate.unix(), this.state.endDate.unix())
     }
 
     render() {
         return (
             <div>
                 <div>
-                    {this.state.startDate}
+                    {this.state.startDate.unix()}
                     <form onSubmit={this._handleForm.bind(this)}>
                         <label for="sel1">Currency:</label>
                         <select value={this.state.currency} onChange={this._handleChangeCur.bind(this)}
@@ -245,13 +260,14 @@ export default class Input extends React.Component {
                         </select>
                         <label>
                             Start
-                            <DatePicker selected={this.state.startDate} onSelect={this._handleDateSelect.bind(this)} onChange={this._handleDateChange.bind(this)}/>
+                            <DatePicker selected={this.state.startDate} onSelect={this._handleDateStartSelect.bind(this)} onChange={this._handleDateSChange.bind(this)}/>
 
                             {/*<input value={this.state.start} onChange={this._handleChangeStart.bind(this)}/>*/}
                         </label>
                         <label>
                             End
-                            <input value={this.state.end} onChange={this._handleChangeEnd.bind(this)}/>
+                            <DatePicker selected={this.state.endDate} onSelect={this._handleDateEndSelect.bind(this)} onChange={this._handleDateEChange.bind(this)}/>
+                            {/*<input value={this.state.end} onChange={this._handleChangeEnd.bind(this)}/>*/}
                         </label>
                         <input type="submit" value="Submit"/>
                     </form>

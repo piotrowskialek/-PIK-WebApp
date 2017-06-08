@@ -142,12 +142,12 @@ export default class ChartComponent extends React.Component {
     //     this.setState({chart: myChart});
     // }
 
-    
+
     componentDidUpdate() {
         function formatTime(timestamp){
             return moment.unix(timestamp).format("YYYY:M:D H:m:s")
         }
-        
+
 
         console.log((this.props));
         if (this.dataa === this.props.data && this.times === this.props.times && this.currency === this.props.currency && this.predData === this.props.predData && this.predTimes === this.props.predTimes) {
@@ -244,8 +244,6 @@ export default class ChartComponent extends React.Component {
     render() {
         return (
             <div>
-                {/*<LineChart data={this.state.chartData} options={this.state.options} width="600" height="250"/>*/}
-
                 <div>
                     <canvas ref={'chart'} height={'400'} width={'700'}/>
                 </div>
