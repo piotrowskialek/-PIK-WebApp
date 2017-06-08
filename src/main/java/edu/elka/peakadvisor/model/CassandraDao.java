@@ -111,6 +111,8 @@ public class CassandraDao {
 
     public CassandraClusterFactoryBean getC.
 
+    dd
+
     luster() {
         return cluster;
     }
