@@ -90,6 +90,7 @@ export default class Layout extends React.Component {
                 <div>
                     <canvas ref={'chart'} height={'400'} width={'600'}/>
                 </div>
+
             </div>
         );
     }
