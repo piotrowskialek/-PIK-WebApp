@@ -106,7 +106,7 @@ public class CassandraDao {
         }).collect(Collectors.toList());
 
         return result;
-        g
+        gdd
     }
 
     public CassandraClusterFactoryBean getCluster() {
