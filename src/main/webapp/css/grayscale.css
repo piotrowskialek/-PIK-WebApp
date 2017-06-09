@@ -61,7 +61,7 @@ a {
   background-color: #ffffff; }
   #mainNav .navbar-toggler {
     font-size: 14px;
-    padding: 11px;
+    padding: 1px;
     color: #707070;
     border: 1px solid white; }
   #mainNav .navbar-brand {
@@ -81,7 +81,7 @@ a {
       background-color: transparent; }
   @media (min-width: 768px) {
     #mainNav {
-      padding: 20px 0;
+      padding: 0px 0;
       -webkit-transition: background .25s ease-in-out, padding .25s ease-in-out;
       -moz-transition: background .25s ease-in-out, padding .25s ease-in-out;
       transition: background .25s ease-in-out, padding .25s ease-in-out;
@@ -102,7 +102,7 @@ a {
   display: table;
   width: 100%;
   height: auto;
-  padding: 100px 0;
+  padding: 10px 0;
   text-align: center;
   color: #ff6749;
   background: url(../img/LIRDh.jpg) no-repeat bottom center scroll;
@@ -135,13 +135,13 @@ a {
   font-size: 26px;
   width: 50px;
   height: 50px;
-  margin-top: 15px;
-  padding: 7px 0;
+  margin-top: 40px;
+  padding: 10px 0;
   -webkit-transition: background .3s ease-in-out;
   -moz-transition: background .3s ease-in-out;
   transition: background .3s ease-in-out;
-  color: white;
-  border: 2px solid white;
+  color: #ff6749;
+  border: 4px solid #ff6749;
   border-radius: 100% !important;
   background: transparent; }
   .btn-circle:hover, .btn-circle:focus {
@@ -156,7 +156,6 @@ a {
   width: 100%;
   padding: 0px 0;
   color: #3c3c3c;
-  background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
   background-color: #ffffff;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -170,7 +169,7 @@ a {
 
 @media (min-width: 767px) {
   .content-section {
-    padding-top: 250px; }
+    padding-top: 20px; }
   .download-section {
     padding: 100px 0; }
   #map {
