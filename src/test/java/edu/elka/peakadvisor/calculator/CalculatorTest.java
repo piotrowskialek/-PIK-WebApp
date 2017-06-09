@@ -14,7 +14,7 @@ class CalculatorTest {
 
     private Calculator calculator = new Calculator();
 
-    @Test
+    /*@Test
     void predictRatesMonotonicLinearRegression () {
         ArrayList<Rate> testRates = new ArrayList<>();
         testRates.add(new Rate (1234, 5.6));
@@ -42,5 +42,5 @@ class CalculatorTest {
             throw new java.lang.Exception("All class values are the same. At least two class values should be different");
         });
         assertEquals("All class values are the same. At least two class values should be different", exception.getMessage());
-    }
+    }*/
 }

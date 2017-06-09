@@ -3,11 +3,9 @@ package edu.elka.peakadvisor.calculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math3.fitting.PolynomialCurveFitter;
+import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import org.springframework.stereotype.Component;
-import weka.classifiers.functions.SMOreg;
-import weka.classifiers.functions.supportVector.Kernel;
-import weka.classifiers.functions.supportVector.RegOptimizer;
-import weka.classifiers.functions.supportVector.RegSMOImproved;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -49,48 +47,26 @@ public class Calculator {
     }
 
     public List<Rate> predictRatesPolynomial (List<Rate> rates, long begin, long end, int power) {
+
         List<Rate> predictedRates = new ArrayList<>();
-        try {
-            Instances data = createRegressionModel(rates);
+        WeightedObservedPoints data = new WeightedObservedPoints();
+        rates.stream().forEach((r)->data.add(r.getTimestamp(), r.getPrice()));
 
-            SMOreg predictor = new SMOreg();
-            String[] polyOptions = {
-                    "-E", Integer.toString(power),
-                    "-C", "250007"
-            };
-            String[] smoOptions = {
-                    "-T", "0.00001",
-                    "-V 2 -P", "1.0E-12",
-                    "-L", "0.00001",
-                    "-W", "1",
-                    "-E", Integer.toString(power)
-            };
+        PolynomialCurveFitter fitter = PolynomialCurveFitter.create(power);
+        double[] coeffs = fitter.fit(data.toList());
 
-            Kernel polyKernel = predictor.getKernel();
-            polyKernel.setOptions(polyOptions);
-
-            RegOptimizer smo = new RegSMOImproved();
-            smo.setSMOReg(predictor);
-            smo.setOptions(smoOptions);
-
-            predictor.setKernel(polyKernel);
-            predictor.setRegOptimizer(smo);
-
-            predictor.buildClassifier(data);
-
+        for (long timestamp = begin; timestamp <= end; timestamp += 900) {
+            double price = 0;
             int i = 0;
-            double predictedPrice = 0.0;
-            for (long timestamp = begin; timestamp <= end; timestamp += 900, ++i) {
-                addRateToInstances(new Rate(timestamp, 0.0), data);
-                Instance predictedRate = data.get(rates.size() + i);
+            for (double coeff : coeffs) {
 
-                predictedPrice = formatPrice(predictor.classifyInstance(predictedRate));
-                predictedRates.add(new Rate(timestamp, predictedPrice));
+                price += (coeff * power(timestamp, i++));
+                price = formatPrice(price);
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            predictedRates.add(new Rate(timestamp, price));
         }
+
         return predictedRates;
     }
 
@@ -119,10 +95,25 @@ public class Calculator {
     private Double formatPrice (double price) {
         if (price < 0)
             price = 0.0;
-        if (price > (10^10))
-            price = 10^10;
+        if (price > Math.pow(10, 10))
+            price = Math.pow(10, 10);
 
         return price;
+    }
+
+    double power(double x, int n){
+        if(n==0)
+            return 1;
+
+        if(n<0){
+            x = 1.0/x;
+            n = -n;
+        }
+        double ret = power(x,n/2);
+        ret = ret * ret;
+        if(n%2!=0)
+            ret = ret * x;
+        return ret;
     }
 
 }
