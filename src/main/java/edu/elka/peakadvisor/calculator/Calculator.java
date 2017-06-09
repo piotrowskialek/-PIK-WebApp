@@ -53,14 +53,16 @@ public class Calculator {
         rates.stream().forEach((r)->data.add(r.getTimestamp(), r.getPrice()));
 
         PolynomialCurveFitter fitter = PolynomialCurveFitter.create(power);
+
         double[] coeffs = fitter.fit(data.toList());
 
         for (long timestamp = begin; timestamp <= end; timestamp += 7200) {
             double price = 0;
             int i = 0;
-            for (double coeff : coeffs) {
 
-                price += (coeff * power(timestamp, i++));
+            for(int j = coeffs.length-1; j>=0; j--) {
+
+                price += (coeffs[j] * power(timestamp, i++));
                 price = formatPrice(price);
             }
 
