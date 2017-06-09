@@ -32,7 +32,7 @@ public class Calculator {
 
             int i = 0;
             double predictedPrice = 0.0;
-            for (long timestamp = begin; timestamp <= end; timestamp += 7200, ++i) {
+            for (long timestamp = begin; timestamp <= end; timestamp += 900, ++i) {
                 addRateToInstances(new Rate(timestamp, 0.0), data);
                 Instance predictedRate = data.get(rates.size() + i);
 
@@ -52,10 +52,10 @@ public class Calculator {
         WeightedObservedPoints data = new WeightedObservedPoints();
         rates.stream().forEach((r)->data.add(r.getTimestamp(), r.getPrice()));
 
-        PolynomialCurveFitter fitter = PolynomialCurveFitter.create(power);
+        PolynomialCurveFitter fitter = PolynomialCurveFitter.create(1);
         double[] coeffs = fitter.fit(data.toList());
 
-        for (long timestamp = begin; timestamp <= end; timestamp += 7200) {
+        for (long timestamp = begin; timestamp <= end; timestamp += 900) {
             double price = 0;
             int i = 0;
             for (double coeff : coeffs) {

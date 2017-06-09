@@ -103,7 +103,8 @@ export default class ChartComponent extends React.Component {
                     borderColor: [
                         'rgba(215, 78, 66, 0.9)'
                     ],
-                    borderWidth: 3
+                    borderWidth: 0.1,
+                    pointHooverRadius: 0,
                 },
                     {
                         label: this.currency + "Predicted",
@@ -115,7 +116,8 @@ export default class ChartComponent extends React.Component {
                         borderColor: [
                             'rgba(215, 158, 44, 0.9)'
                         ],
-                        borderWidth: 3
+                        borderWidth: 0.1,
+                        pointHooverRadius: 0,
                     }]
             }
             let chart = this.state.chart;
