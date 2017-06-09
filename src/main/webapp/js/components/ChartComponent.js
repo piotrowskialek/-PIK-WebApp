@@ -9,7 +9,7 @@ export default class ChartComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        this.data= {};
+        this.data = {};
 
         this.dataa = [];
         this.times = [];
@@ -24,7 +24,7 @@ export default class ChartComponent extends React.Component {
         let myChart = new Chart(chartCanvas, {
             type: 'line',
             data: this.data,
-            options : {
+            options: {
                 responsive: true,
                 maintainAspectRatio: false
             }
@@ -34,7 +34,7 @@ export default class ChartComponent extends React.Component {
     }
 
     componentDidUpdate() {
-        function formatTime(timestamp){
+        function formatTime(timestamp) {
             return moment.unix(timestamp).format("YYYY:M:D H:m:s")
         }
 
@@ -49,16 +49,16 @@ export default class ChartComponent extends React.Component {
         this.predData = this.props.predData;
         this.predTimes = this.props.predTimes;
 
-        if(typeof this.dataa !== 'undefined'){
+        if (typeof this.dataa !== 'undefined') {
             console.log("Data undefined")
         }
-        if(typeof this.times !== 'undefined'){
+        if (typeof this.times !== 'undefined') {
             console.log("times undefined")
         }
-        if(typeof this.predData !== 'undefined'){
+        if (typeof this.predData !== 'undefined') {
             console.log("preddata undefined")
         }
-        if(typeof this.predTimes !== 'undefined'){
+        if (typeof this.predTimes !== 'undefined') {
             console.log("predtimes undefined")
         }
 
@@ -74,60 +74,58 @@ export default class ChartComponent extends React.Component {
             let labels = this.times.concat(this.predTimes).map(formatTime);
 
             let datHist = []
-            for(var i=0; i < this.times.length; i++){
-                datHist.push({x : formatTime(this.times[i]), y: this.dataa[i]})
+            for (var i = 0; i < this.times.length; i++) {
+                datHist.push({x: formatTime(this.times[i]), y: this.dataa[i]})
             }
 
-            console.log({datH : this.times});
+            console.log({datH: this.times});
             console.log({datHist: datHist});
 
             let datPred = [];
-            for(var i=0; i < this.predTimes.length; i++){
-                datPred.push({x : formatTime(this.predTimes[i]), y: this.predData[i]})
+            for (var i = 0; i < this.predTimes.length; i++) {
+                datPred.push({x: formatTime(this.predTimes[i]), y: this.predData[i]})
             }
-            console.log({datH : this.predTimes});
-            console.log({datPred : datPred});
-            console.log({labels : labels});
+            console.log({datH: this.predTimes});
+            console.log({datPred: datPred});
+            console.log({labels: labels});
 
 
             this.data = {
                 labels: labels,
-                    datasets: [{
-                label: this.currency,
-                data: datHist,
-                fill: true,
-                backgroundColor: [
-                    'rgba(215, 78, 66, 0.4)',
-
-                ],
-                borderColor: [
-                    'rgba(215, 78, 66, 0.9)'
-                ],
-                borderWidth: 3
-            },
-                {
-                    label: this.currency  + "Predicted",
-                    data: datPred,
+                datasets: [{
+                    label: this.currency,
+                    data: datHist,
                     fill: true,
                     backgroundColor: [
-                        'rgba(215, 158, 44, 0.4)'
+                        'rgba(215, 78, 66, 0.4)',
+
                     ],
                     borderColor: [
-                        'rgba(215, 158, 44, 0.9)'
+                        'rgba(215, 78, 66, 0.9)'
                     ],
                     borderWidth: 3
-                }]
+                },
+                    {
+                        label: this.currency + "Predicted",
+                        data: datPred,
+                        fill: true,
+                        backgroundColor: [
+                            'rgba(215, 158, 44, 0.4)'
+                        ],
+                        borderColor: [
+                            'rgba(215, 158, 44, 0.9)'
+                        ],
+                        borderWidth: 3
+                    }]
             }
             let chart = this.state.chart;
             chart.data = this.data
-            chart.data.labels =this.data.labels;
+            chart.data.labels = this.data.labels;
             chart.update()
-            // this.state.myChart.update();
-            // this.forceUpdate();
+
         }
 
     }
-
 
     render() {
         return (
