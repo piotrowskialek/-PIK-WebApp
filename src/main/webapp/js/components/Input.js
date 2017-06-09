@@ -82,6 +82,7 @@ export default class Input extends React.Component {
         return (
             <div>
                 <div>
+
                     <form  class="form-inline" onSubmit={this._handleForm.bind(this)}>
                         <label class="sr-only" for="sel1">Currency:</label>
                         <select value={this.state.currency} onChange={this._handleChangeCur.bind(this)}
@@ -305,7 +306,12 @@ export default class Input extends React.Component {
                         </div>
                     </form>
                 </div>
-
+                <p class="main-text">
+                END_DATE:{this.state.endDate.unix()}
+                </p>
+                <p class="main-text">
+                START_DATE:{this.state.startDate.unix()}
+                </p>
             </div>
 
         )
