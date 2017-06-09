@@ -20,15 +20,15 @@ export default class Layout extends React.Component {
         this.setState({title: "PeaknieAdbisor"})
     }
 
-    downloadData(currency, start, end) {
+    downloadData(currency, start, end, power) {
         var rest, mime, client;
         rest = require('rest'),
             mime = require('rest/interceptor/mime');
-        console.log(currency, start, end)
+        console.log(currency, start, end, power);
 
         let a;
         client = rest.wrap(mime);
-        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + currency + '&start=' + start + '&end=' + end + "&power=3"}).then(response => {
+        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + currency + '&start=' + start + '&end=' + end + "&power=" + power}).then(response => {
                 console.log(response)
                 a = JSON.parse(response['entity']);
                 console.log("waluta", a['currency'])
@@ -70,7 +70,7 @@ export default class Layout extends React.Component {
         return (
             <div>
                 {/*<Calendar/>*/}
-                <Title title={this.state.title}/>
+                {/*<Title title={this.state.title}/>*/}
                 <Input changeTitle={this.changeTitle.bind(this)} downloadData={this.downloadData.bind(this)}/>
                 {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}
                 {/*<ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>*/}
