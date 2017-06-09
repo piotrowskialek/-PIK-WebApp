@@ -2,6 +2,8 @@ package edu.elka.peakadvisor.model;
 
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
+import jnr.ffi.annotations.In;
+import org.apache.commons.math3.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
@@ -9,6 +11,7 @@ import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -78,7 +81,7 @@ public class CassandraDao {
         return result;
     }
 
-    public List<Double> getPricesWithTimestampRange(String name, int timestampStart, int timestampEnd) {
+    public List<Pair<Double,Integer>> getPricesWithTimestampRange(String name, int timestampStart, int timestampEnd) {
 
         CassandraOperations template = this.cassandraTemplate;
         Select selectStatement = QueryBuilder
@@ -102,24 +105,38 @@ public class CassandraDao {
             }
         });
 
-        List<Number> result = queryResult.stream().map((l) -> {
+        List<Pair<Number,Integer>> list = new ArrayList<>();
+                queryResult.stream().map((l)->{
+
             try {
-
-                return (Number) ((l.getRates().getClass()
-                        .getMethod("get" + name.toUpperCase()).invoke(l.getRates())));
-
+                return new Pair(((l.getRates().getClass()
+                        .getMethod("get" + name.toUpperCase()).invoke(l.getRates()))),l.getTimestamp());
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
             }
             return null;
-        }).collect(Collectors.toList());
+        }).forEach(p->list.add(p));
 
 
-        List<Double> result2 = result.stream().map(d -> d.doubleValue()).collect(Collectors.toList());
+        List<Pair<Double,Integer>> result2 = new ArrayList<>();
+
+
+//        for(Pair p:list){
+//            result2.add(new Pair<Double, Integer>((Double) p.getKey(),(Integer) p.getValue()));
+//        }
+
+
+                list.stream().map((r) ->
+
+                        new Pair(((Double)r.getKey()).doubleValue()
+                                ,((Integer)r.getValue()).intValue()))
+
+                        .forEach(p->result2.add(p));
+
 
         return result2;
     }

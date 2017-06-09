@@ -6,6 +6,7 @@ import edu.elka.peakadvisor.collector.CollectingClient;
 import edu.elka.peakadvisor.collector.YahooClient;
 import edu.elka.peakadvisor.model.CassandraDao;
 import edu.elka.peakadvisor.model.Latest;
+import org.apache.commons.math3.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
@@ -110,16 +111,24 @@ public class PeakadvisorController {
         }*/
 
         try {
-            List<Double> prices = dao.getPricesWithTimestampRange(cur, start, (int) current);
+
+            //List<Double> prices = dao.getPricesWithTimestampRange(cur, start, (int) current);
+
+            //po lewej macie wartosc waluty, po prawej timestamp
+
+            List<Pair<Double,Integer>> prices = dao.getPricesWithTimestampRange(cur,start,(int) current);
+
 
             List<Rate> rates = new ArrayList<>();
             int i = 0;
-            for (int timestamp = start; i < prices.size(); timestamp += 3600, ++i) {
-                rates.add(new Rate(timestamp, prices.get(i)));
-                returner += "\"" + timestamp + "\" : \"" + prices.get(i) + "\" ";
+
+            for(Pair p: prices){
+                rates.add(new Rate(((Number) p.getValue()).longValue(), ((Double) p.getKey())*1000/1000));
+                returner += "\"" + p.getValue() + "\" : \"" + p.getKey() + "\" ";
                 if (i != (prices.size() - 1))
                     returner += ", ";
             }
+
 
             returner += "}, \"predicted\" : {";
             List<Rate> predictedRates = calculator.predictRatesPolynomial(rates, current, end, power); //(power == 1 ? calculator.predictRatesLinear(rates, current, end) :
