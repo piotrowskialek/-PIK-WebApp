@@ -63,13 +63,13 @@ export default class ChartComponent extends React.Component {
         }
 
         if (typeof this.dataa !== 'undefined' && typeof this.times !== 'undefined' && typeof this.currency !== 'undefined' && typeof this.predData !== 'undefined' && typeof this.predData !== 'undefined') {
-            console.log("will did props", {
-                dataa: this.dataa,
-                times: this.times,
-                currency: this.currency,
-                predTimes: this.predTimes,
-                predData: this.predData
-            });
+            // console.log("will did props", {
+            //     dataa: this.dataa,
+            //     times: this.times,
+            //     currency: this.currency,
+            //     predTimes: this.predTimes,
+            //     predData: this.predData
+            // });
 
             let labels = this.times.concat(this.predTimes).map(formatTime);
 
@@ -126,7 +126,7 @@ export default class ChartComponent extends React.Component {
             chart.update()
 
         }
-
+        // zmiany
     }
 
     render() {
