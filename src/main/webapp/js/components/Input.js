@@ -14,6 +14,7 @@ export default class Input extends React.Component {
             currency: "",
             start: "",
             end: "",
+            power : "",
 
             startDate: moment(),
             endDate: moment()
@@ -27,6 +28,7 @@ export default class Input extends React.Component {
         console.log("START")
 
     }
+
     _handleDateEndSelect(date) {
         this.setState({
             endDate: date
@@ -46,6 +48,11 @@ export default class Input extends React.Component {
 
     }
 
+    _handleChangePower(e) {
+        const power = e.target.value;
+        console.log("handling power")
+        this.setState({power: power});
+    }
     _handleChangeCur(e) {
         const currency = e.target.value;
         console.log("handling cur")
@@ -68,7 +75,7 @@ export default class Input extends React.Component {
     _handleForm(e) {
         e.preventDefault();
         console.log("submitted")
-        this.props.downloadData(this.state.currency, this.state.startDate.unix(), this.state.endDate.unix())
+        this.props.downloadData(this.state.currency, this.state.startDate.unix(), this.state.endDate.unix(), this.state.power)
     }
 
     render() {
@@ -258,15 +265,35 @@ export default class Input extends React.Component {
                             <option>zmw</option>
                             <option>zwl</option>
                         </select>
+                        <label>Power
+                            <select value={this.state.power} onChange={this._handleChangePower.bind(this)}
+                                    class="form-control" id="sel1">
+                                    <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                            </select>
+                        </label>
                         <label>
                             Start
-                            <DatePicker selected={this.state.startDate} onSelect={this._handleDateStartSelect.bind(this)} onChange={this._handleDateSChange.bind(this)}/>
+                            <DatePicker selected={this.state.startDate}
+                                        onSelect={this._handleDateStartSelect.bind(this)}
+                                        onChange={this._handleDateSChange.bind(this)}/>
 
                             {/*<input value={this.state.start} onChange={this._handleChangeStart.bind(this)}/>*/}
                         </label>
                         <label>
                             End
-                            <DatePicker selected={this.state.endDate} onSelect={this._handleDateEndSelect.bind(this)} onChange={this._handleDateEChange.bind(this)}/>
+                            <DatePicker selected={this.state.endDate} onSelect={this._handleDateEndSelect.bind(this)}
+                                        onChange={this._handleDateEChange.bind(this)}/>
                             {/*<input value={this.state.end} onChange={this._handleChangeEnd.bind(this)}/>*/}
                         </label>
                         <input type="submit" value="Submit"/>

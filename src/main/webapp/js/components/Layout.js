@@ -20,15 +20,15 @@ export default class Layout extends React.Component {
         this.setState({title: "PeaknieAdbisor"})
     }
 
-    downloadData(currency, start, end) {
+    downloadData(currency, start, end, power) {
         var rest, mime, client;
         rest = require('rest'),
             mime = require('rest/interceptor/mime');
-        console.log(currency, start, end)
+        console.log(currency, start, end, power);
 
         let a;
         client = rest.wrap(mime);
-        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + currency + '&start=' + start + '&end=' + end + "&power=3"}).then(response => {
+        client({path: 'http://localhost:8080/PIK-WebApp-0.0.1-SNAPSHOT/getValue?currency=' + currency + '&start=' + start + '&end=' + end + "&power=" + power}).then(response => {
                 console.log(response)
                 a = JSON.parse(response['entity']);
                 console.log("waluta", a['currency'])
