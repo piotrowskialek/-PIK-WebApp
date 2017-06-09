@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,7 +78,7 @@ public class CassandraDao {
         return result;
     }
 
-    public List<Double> getPricesWithTimestampRange(String name, int timestampStart, int timestampEnd){
+    public List<Double> getPricesWithTimestampRange(String name, int timestampStart, int timestampEnd) {
 
         CassandraOperations template = this.cassandraTemplate;
         Select selectStatement = QueryBuilder
@@ -85,10 +86,21 @@ public class CassandraDao {
                 .from("Latest")
                 .allowFiltering();
 
-        selectStatement.where(QueryBuilder.gte("timestamp",timestampStart));
-        selectStatement.where(QueryBuilder.lte("timestamp",timestampEnd));
-        List<Latest> queryResult = template.select(selectStatement,Latest.class);
+        selectStatement.where(QueryBuilder.gte("timestamp", timestampStart));
+        selectStatement.where(QueryBuilder.lte("timestamp", timestampEnd));
+        List<Latest> queryResult = template.select(selectStatement, Latest.class);
 
+        queryResult.sort(new Comparator<Latest>() {
+            @Override
+            public int compare(Latest o1, Latest o2) {
+                if (o1.getTimestamp() > o2.getTimestamp())
+                    return 1;
+                else if (o1.getTimestamp() < o2.getTimestamp())
+                    return -1;
+                else
+                    return 0;
+            }
+        });
 
         List<Number> result = queryResult.stream().map((l) -> {
             try {
@@ -111,6 +123,7 @@ public class CassandraDao {
 
         return result2;
     }
+
 
     public CassandraClusterFactoryBean getCluster() {
         return cluster;
