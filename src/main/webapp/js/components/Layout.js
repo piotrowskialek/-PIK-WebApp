@@ -70,7 +70,7 @@ export default class Layout extends React.Component {
         return (
             <div>
                 {/*<Calendar/>*/}
-                <Title title={this.state.title}/>
+                {/*<Title title={this.state.title}/>*/}
                 <Input changeTitle={this.changeTitle.bind(this)} downloadData={this.downloadData.bind(this)}/>
                 {/*<Input changeSDate={this.setStartDate.bind(this)} changeEDate={this.setEndDate.bind(this)} setCur={this.setCur.bind(this)}/>*/}
                 {/*<ChartComponent startDate={this.startDate} endDate={this.endDate} currency={this.currency}/>*/}

@@ -1,24 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Peakadvisor</title>
-    <link href="static/test.css" rel="stylesheet">
+
     <meta charset="utf-8">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="node_modules/react-datepicker/dist/react-datepicker.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Peak Advisor</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/grayscale.css" rel="stylesheet">
+    <link href="static/test.css" rel="stylesheet">
+    <!-- Temporary navbar container fix -->
+    <style>
+        .navbar-toggler {
+            z-index: 1;
+        }
+
+        @media (max-width: 576px) {
+            nav > .container {
+                width: 100%;
+            }
+        }
+    </style>
+
 </head>
-<body>
+
+<body id="page-top">
+
+<!-- Intro Header -->
+<header class="masthead">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="brand-heading">Peak Advisor</h1>
+                    <p class="intro-text">Plan your investments on currency market and start earning money right
+                        now!</p>
+                    <a href="#about" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- About Section -->
+<section id="about" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 offset-md-2">
+
+            <p class="main-text">This is the place where you can observe currency charts. Please pick currency, start and end date.
+                If you want to see prediction as an end date, select date in future, as a limit of prediction.
+                You can also choose degree of polynomial approximation function.</p>
+
+            <div id="chart"></div>
+        </div>
+    </div>
+</section>
 
 
-<div class="animated fadeIn"
-     id="chart">
-</div>
+<!-- Footer -->
+<footer>
+    <div class="container text-center">
+        <p>Copyright &copy; Peak Advisor 2017</p>
+    </div>
+</footer>
 
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/tether/tether.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="bin/app2.bundle.js" charset="utf-8"></script>
+<!-- Plugin JavaScript -->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-
+<!-- Custom scripts for this template -->
+<script src="js/grayscale.js"></script>
+<script src="bin/app.bundle.js"></script>
 </body>
+
 </html>
