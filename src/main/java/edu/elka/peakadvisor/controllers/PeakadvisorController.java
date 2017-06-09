@@ -6,8 +6,6 @@ import edu.elka.peakadvisor.collector.CollectingClient;
 import edu.elka.peakadvisor.collector.YahooClient;
 import edu.elka.peakadvisor.model.CassandraDao;
 import edu.elka.peakadvisor.model.Latest;
-import jnr.ffi.annotations.In;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
@@ -138,14 +136,12 @@ public class PeakadvisorController {
             e.printStackTrace();
         }
 
-        saveOneTest();
         dao.getPricesWithTimestampRange("btc",100,Integer.MAX_VALUE);
         return returner;
 
     }
 
     public void saveOneTest(){
-
 
         CollectingClient yahooClient = new YahooClient();
         Latest latest = yahooClient.collect("https://openexchangerates.org/api/latest.json?app_id=f181f6f8185d40cb88f226efa37a3291");
@@ -156,6 +152,7 @@ public class PeakadvisorController {
          */
         dao.saveLatest(latest);
         System.out.println("saveOneTest() poszlo");
+
 
     }
 
