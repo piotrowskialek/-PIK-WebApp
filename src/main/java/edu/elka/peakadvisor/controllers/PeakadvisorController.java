@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -136,7 +137,7 @@ public class PeakadvisorController {
             e.printStackTrace();
         }
 
-        dao.getPricesWithTimestampRange("btc",100,Integer.MAX_VALUE);
+        //dao.getPricesWithTimestampRange("btc",100,Integer.MAX_VALUE);
         return returner;
 
     }
