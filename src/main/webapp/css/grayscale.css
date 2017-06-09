@@ -209,10 +209,13 @@ ul.banner-social-buttons {
         margin-bottom: 0; } }
 
 footer {
-  padding: 50px 0; }
+  padding: 50px 0;
+  color: #1d1e1f; }
   footer p {
     font-size: 14px;
-    margin: 0; }
+    margin: 0;
+
+  }
 
 ::-moz-selection {
   background: #fcfcfc;
