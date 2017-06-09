@@ -12,17 +12,17 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CalculatorTest {
 
-    private Calculator calculator = new Calculator();
+    private Calculator calculator =  Calculator();
 
-    /*@Test
+    @Test
     void predictRatesMonotonicLinearRegression () {
         ArrayList<Rate> testRates = new ArrayList<>();
         testRates.add(new Rate (1234, 5.6));
         testRates.add(new Rate (3456, 5.6));
         List<Rate> result = calculator.predictRatesLinear(testRates, 4000, 7603);
-        assertEquals(true, (0.0 <= result.get(0).getPrice()) && (result.get(0).getPrice() <= 12.9));
+        assertEquals(-30000, result.get(0).getPrice();
     }
-
+/*
     @Test
     void predictRatesLinearLinearRegression () {
         ArrayList<Rate> testRates = new ArrayList<>();

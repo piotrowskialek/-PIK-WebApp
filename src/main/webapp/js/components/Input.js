@@ -50,31 +50,27 @@ export default class Input extends React.Component {
 
     _handleChangePower(e) {
         const power = e.target.value;
-        console.log("handling power")
         this.setState({power: power});
     }
     _handleChangeCur(e) {
         const currency = e.target.value;
-        console.log("handling cur")
         this.setState({currency: currency});
     }
 
     _handleChangeStart(e) {
         const start = e.target.value;
-        console.log("handling start")
         this.setState({start: start});
     }
 
     _handleChangeEnd(e) {
         const end = e.target.value;
-        console.log("handling end")
         this.setState({end: end});
     }
 
 
     _handleForm(e) {
         e.preventDefault();
-        console.log("submitted")
+
         this.props.downloadData(this.state.currency, this.state.startDate.unix(), this.state.endDate.unix(), this.state.power)
     }
 
